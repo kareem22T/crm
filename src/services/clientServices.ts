@@ -23,7 +23,7 @@ export function creteClient(client:ClientType) {
 
 // Update client
 export function updateClient(client:ClientType) {
-    return axios.post(`${API_URL}/api/Client/Update`, client);
+    return axios.put(`${API_URL}/api/Client/Update`, client);
 }
 
 // Delete Client

@@ -7,6 +7,9 @@ import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import { BranchRow, BranchType, createBranch, getBranches } from "../../../services/branchesServices";
 import BranchesList from "./branchesTable";
 import BranchForm from "./createBranch";
+import { VatRow, VatType, createVat, getVats } from "../../../services/vatServices";
+import VatList from "./vatsTable";
+import VatForm from "./createVat";
 
 interface formProps {
     client_prop: clientRow;
@@ -36,7 +39,9 @@ const Client: React.FC<formProps> = ({client_prop}) => {
     const [client, setClient] = useState<clientRow>(client_prop);
     const [slectedTab, setSelectedTab] = React.useState(1);
     const [brnaches, setBranches] = React.useState<BranchRow[]>([]);
+    const [vats, setVats] = React.useState<VatRow[]>([]);
     const [showBranchForm, setShowBranchForm] = React.useState<boolean>(false)
+    const [showVatForm, setShowVatForm] = React.useState<boolean>(false)
     const [isUpdate, setIsUpdate] = React.useState<boolean>(false)
     
     const inputBindHandler = (key: keyof clientRow) => (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -80,6 +85,20 @@ const Client: React.FC<formProps> = ({client_prop}) => {
             })        
     }
 
+    const handleCreateVat = (vat: VatType) => {
+                createVat(vat, client.id).then(res => {
+                    if (res.data.isSuccess == true) {
+                        getVats(10, 1, client.id).then(data => {
+                            setVats(data.data.data)
+                            setShowVatForm(false)
+                            showSuccessMsg("تم اضافة بنجاح")
+                    }).catch(error => {
+                        console.error(error);
+                    });
+                }
+            })        
+    }
+
 
 
     React.useEffect(() => {
@@ -87,6 +106,14 @@ const Client: React.FC<formProps> = ({client_prop}) => {
         getBranches(10, 1, client.id).then(data => {
     
             setBranches(data.data.data)
+    
+        }).catch(error => {
+            console.error(error);
+        });
+
+        getVats(10, 1, client.id).then(data => {
+    
+            setVats(data.data.data)
     
         }).catch(error => {
             console.error(error);
@@ -375,6 +402,22 @@ const Client: React.FC<formProps> = ({client_prop}) => {
                             </>
                         ) : (
                             <BranchForm createMethod={handleCreateBranch}/>
+                        )
+                    )
+                )
+            }
+            {
+                slectedTab == 3 && (
+                    (
+                        vats && vats.length > 0 && !showVatForm ? (
+                            <>
+                                <VatList vats={vats} />
+                                <div className="flex flex-col gap-5.5 p-3" style={{gridColumn: "span 2"}}>
+                                    <button onClick={() => setShowVatForm(true)} className="w-75 inline-flex items-center justify-center gap-2.5 rounded-full bg-meta-3 py-4 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10" style={{margin: "auto"}}>اضافة  </button>
+                                </div>
+                            </>
+                        ) : (
+                            <VatForm createMethod={handleCreateVat}/>
                         )
                     )
                 )

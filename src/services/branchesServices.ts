@@ -4,7 +4,7 @@ import { MetaData } from '../types/metadata';
 
 // Get clients
 export function getBranches(PageSize: number, PageNumber: number, clientId: number): Promise<getBranchesResponse> {
-    return axios.get<getBranchesResponse>(`${API_URL}/api/Client/${clientId}/Branch/GetBranchesForClient`, {
+    return axios.get<getBranchesResponse>(`${API_URL}/api/Client/${clientId}/Branch`, {
         params: {
             PageSize,
             PageNumber
@@ -18,7 +18,7 @@ export function getBranches(PageSize: number, PageNumber: number, clientId: numb
 
 // Create branch
 export function createBranch(branch: BranchType, clientId: number) {
-    return axios.post(`${API_URL}/api/Client/${clientId}/Branch/CreateBranchForClient`, branch);
+    return axios.post(`${API_URL}/api/Client/${clientId}/Branch`, branch);
 }
 
 // types and interface
