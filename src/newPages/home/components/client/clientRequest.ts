@@ -1,4 +1,4 @@
-import { ClientType } from "../../services/clientServices";
+import { ClientType } from "../../../../services/clientServices";
 
 export const validateClient = (client: ClientType): string | null => {
     if (!client.code) {

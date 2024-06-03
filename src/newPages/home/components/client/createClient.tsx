@@ -1,8 +1,8 @@
-import { ClientType } from "../../../services/clientServices";
+import { ClientType } from "../../../../services/clientServices";
 import React, { useState } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { validateClient } from "../clientRequest";
+import { validateClient } from "./clientRequest";
 
 interface formProps {
     createMethod: (client: ClientType) => void;

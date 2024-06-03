@@ -1,12 +1,14 @@
-import { BranchType } from "../../../services/branchesServices";
+import { BranchRow, updateBranch } from "../../../../services/branchesServices";
 import React, { useState } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Switch from '@mui/material/Switch';
-import { validateBranch } from "../branchRequest";
+import { validateBranch } from "./branchRequest";
+import { formatDate } from "../../../../services/globalMethods";
 
 interface formProps {
-    createMethod: (branch: BranchType) => void;
+    updateMethod: (branch: BranchRow) => boolean,
+    branch_prop: BranchRow
 }
 
 const showErrorMessage = (msg:string) => {
@@ -14,18 +16,19 @@ const showErrorMessage = (msg:string) => {
       position: toast.POSITION.TOP_RIGHT,
     });
 };
-
-const BranchForm: React.FC<formProps> = ({createMethod}) => {
-    const [branch, setBranch] = useState<BranchType>({
-        dateRentalContract: "",
-        address: "",
-        manager: "",
-        phoneNumber: "",
-        email: "",
-        isMain: false
+const showSuccessMsg = (msg:string) => {
+    toast.success(msg, {
+      position: toast.POSITION.TOP_RIGHT,
     });
-    
-    const inputBindHandler = (key: keyof BranchType) => (e: React.ChangeEvent<HTMLInputElement>) => {
+  };
+  
+
+
+const BranchDetails: React.FC<formProps> = ({updateMethod, branch_prop}) => {
+    const [branch, setBranch] = useState<BranchRow>(branch_prop);
+    const [isUpdate, setIsUpdate] = React.useState<boolean>(false)
+
+    const inputBindHandler = (key: keyof BranchRow) => (e: React.ChangeEvent<HTMLInputElement>) => {
         setBranch({ ...branch, [key]: e.target.value });    
     };
 
@@ -33,15 +36,23 @@ const BranchForm: React.FC<formProps> = ({createMethod}) => {
         setBranch({...branch, ["isMain"]: event.target.checked});
       };
     
-    const handleValidateNCreate = () => {
-        let error = validateBranch(branch)
-        if (error) {
-            showErrorMessage(error)
+    const handleUpdate = () => {
+        
+        if (isUpdate) {
+            let error = validateBranch(branch)
+                if (error) {
+                    showErrorMessage(error)
+            } else {                
+                let update = updateMethod(branch)
+                if (update) {
+                    showSuccessMsg("تم التحديث بنجاح")
+                    setIsUpdate(false)
+                }
+            }
         } else {
-            createMethod(branch)
+            setIsUpdate(true)
         }
     }
-
     return (
         <div className="flex flex-col gap-9">
             {/* <!-- Input Fields --> */}
@@ -57,7 +68,8 @@ const BranchForm: React.FC<formProps> = ({createMethod}) => {
                             className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                             value={branch.address}
                             onChange={inputBindHandler('address')}
-                        />
+                            disabled={!isUpdate || false}
+                            />
                     </div>
                 </div>
                 <div className="flex flex-col gap-5.5 p-3" >
@@ -71,7 +83,8 @@ const BranchForm: React.FC<formProps> = ({createMethod}) => {
                             className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                             value={branch.manager}
                             onChange={inputBindHandler('manager')}
-                        />
+                            disabled={!isUpdate || false}
+                            />
                     </div>
                 </div>
                 <div className="flex flex-col gap-5.5 p-3" >
@@ -85,7 +98,8 @@ const BranchForm: React.FC<formProps> = ({createMethod}) => {
                             className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                             value={branch.phoneNumber}
                             onChange={inputBindHandler('phoneNumber')}
-                        />
+                            disabled={!isUpdate || false}
+                            />
                     </div>
                 </div>
                 <div className="flex flex-col gap-5.5 p-3" >
@@ -99,7 +113,8 @@ const BranchForm: React.FC<formProps> = ({createMethod}) => {
                             className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                             value={branch.email}
                             onChange={inputBindHandler('email')}
-                        />
+                            disabled={!isUpdate || false}
+                            />
                     </div>
                 </div>
                 <div className="flex flex-col gap-5.5 p-3" >
@@ -111,9 +126,10 @@ const BranchForm: React.FC<formProps> = ({createMethod}) => {
                             type="date"
                             placeholder="تاريخ عقد الإيجار"
                             className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
-                            value={branch.dateRentalContract}
+                            value={formatDate(branch.dateRentalContract)}
                             onChange={inputBindHandler('dateRentalContract')}
-                        />
+                            disabled={!isUpdate || false}
+                            />
                     </div>
                 </div>
                 <div className="flex flex-col gap-5.5 p-3" >
@@ -131,6 +147,7 @@ const BranchForm: React.FC<formProps> = ({createMethod}) => {
                             checked={branch.isMain}
                             onChange={handleChangeIsMain}
                             inputProps={{ 'aria-label': 'controlled' }}
+                            disabled={!isUpdate || false}
                             />
                             <span style={{marginRight: 8}}> 
                             غير رئيسي
@@ -139,7 +156,7 @@ const BranchForm: React.FC<formProps> = ({createMethod}) => {
                     </div>
                 </div>
                 <div className="flex flex-col gap-5.5 p-3" style={{gridColumn: "span 2"}}>
-                    <button onClick={() => handleValidateNCreate()} className="w-75 inline-flex items-center justify-center gap-2.5 rounded-full bg-meta-3 py-4 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10" style={{margin: "auto"}}>اضافة الفرع</button>
+                    <button onClick={() => handleUpdate()} className="w-75 inline-flex items-center justify-center gap-2.5 rounded-full bg-meta-3 py-4 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10" style={{margin: "auto"}}>{ isUpdate ? "تحديث" : "تعديل" }</button>
                 </div>
             </div>
             <ToastContainer />
@@ -147,4 +164,4 @@ const BranchForm: React.FC<formProps> = ({createMethod}) => {
     )
 }
 
-export default BranchForm;
+export default BranchDetails;

@@ -21,6 +21,17 @@ export function createBranch(branch: BranchType, clientId: number) {
     return axios.post(`${API_URL}/api/Client/${clientId}/Branch`, branch);
 }
 
+
+// Update branch
+export function updateBranch(branch: BranchRow, clientId: number) {
+    return axios.put(`${API_URL}/api/Client/${clientId}/Branch`, branch);
+}
+
+// Delete branch
+export function deleteBranch(id:number, clientId: number) {
+    return axios.delete(`${API_URL}/api/Client/${clientId}/Branch/${id}`);
+}
+
 // types and interface
 
     // Create and update type

@@ -1,4 +1,4 @@
-import { VatType } from "../../services/vatServices";
+import { VatType } from "../../../../services/vatServices";
 
 export const validateVat = (VAT: VatType): string | null => {
     if (!VAT.status)

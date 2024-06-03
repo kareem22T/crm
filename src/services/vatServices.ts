@@ -21,6 +21,16 @@ export function createVat(vat: VatType, clientId: number) {
     return axios.post(`${API_URL}/api/Client/${clientId}/VAT`, vat);
 }
 
+// Update Vat
+export function updateVat(vat: VatRow, clientId: number) {
+    return axios.put(`${API_URL}/api/Client/${clientId}/VAT`, vat);
+}
+
+// Delete vat
+export function deleteVat(id:number, clientId: number) {
+    return axios.delete(`${API_URL}/api/Client/${clientId}/VAT/${id}`);
+}
+
 // types and interface
 
     // Create and update type

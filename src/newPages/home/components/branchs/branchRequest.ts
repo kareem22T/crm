@@ -1,4 +1,4 @@
-import { BranchType } from "../../services/branchesServices";
+import { BranchType } from "../../../../services/branchesServices";
 
 export const validateBranch = (Branch: BranchType): string | null => {
     if (!Branch.address)

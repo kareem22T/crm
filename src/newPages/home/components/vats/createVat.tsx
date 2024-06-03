@@ -1,8 +1,8 @@
-import { VatType } from "../../../services/vatServices";
+import { VatType } from "../../../../services/vatServices";
 import React, { useState } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { validateVat } from "../vatRequest";
+import { validateVat } from "./vatRequest";
 
 interface formProps {
 createMethod: (vat: VatType) => void;

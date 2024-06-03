@@ -1,17 +1,9 @@
-import { clientRow, deleteClient } from '../../../services/clientServices';
+import { clientRow } from '../../../../services/clientServices';
 import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
 import React from 'react';
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
-const showSuccessMsg = (msg:string) => {
-  toast.success(msg, {
-    position: toast.POSITION.TOP_RIGHT,
-  });
-};
-
 
 interface TableProps {
     clients: clientRow[],
