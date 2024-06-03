@@ -11,11 +11,11 @@ const VatList: React.FC<TableProps> = ({ vats }) => {
         <table className="w-full table-auto">
           <thead>
             <tr className="bg-gray-2 text-right dark:bg-meta-4" style={{whiteSpace: "nowrap"}}>
-                <th className="border-b border-[#eee] py-5 px-4 font-medium text-black dark:text-white">الحالة</th>
-                <th className="border-b border-[#eee] py-5 px-4 font-medium text-black dark:text-white">ضريبة الشراء</th>
-                <th className="border-b border-[#eee] py-5 px-4 font-medium text-black dark:text-white">الاختصاص القضائي</th>
+                <th className="border-b border-[#eee] py-5 px-4 font-medium text-black dark:text-white">موقف التسجيل بالقيمة المضافة</th>
+                <th className="border-b border-[#eee] py-5 px-4 font-medium text-black dark:text-white">رقم التسجيل بالقيمة المضافة</th>
+                <th className="border-b border-[#eee] py-5 px-4 font-medium text-black dark:text-white">المأمورية التابع لها</th>
                 <th className="border-b border-[#eee] py-5 px-4 font-medium text-black dark:text-white">تاريخ التسجيل </th>
-                <th className="border-b border-[#eee] py-5 px-4 font-medium text-black dark:text-white">تاريخ الانتهاء  </th>
+                <th className="border-b border-[#eee] py-5 px-4 font-medium text-black dark:text-white">تاريخ انتهاء شهادة التسجيل  </th>
                 <th></th>
             </tr>
           </thead>

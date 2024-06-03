@@ -44,9 +44,9 @@ return (
         <div className="flex flex-col gap-5.5 p-3">
             <div>
                 <label className="mb-3 block text-black dark:text-white">
-                    الحالة
+                موقف التسجيل بالقيمة المضافة
                 </label>
-                <input type="text" placeholder="الحالة"
+                <input type="text" placeholder="موقف التسجيل بالقيمة المضافة"
                     className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                     value={vat.status} onChange={inputBindHandler('status')} />
             </div>
@@ -55,9 +55,9 @@ return (
             {/* Input for "ضريبة الشراء" */}
             <div>
                 <label className="mb-3 block text-black dark:text-white">
-                    ضريبة الشراء
+                    رقم التسجيل بالقيمة المضافة
                 </label>
-                <input type="text" placeholder="ضريبة الشراء"
+                <input type="text" placeholder="رقم التسجيل بالقيمة المضافة"
                     className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                     value={vat.vatNumber} onChange={inputBindHandler('vatNumber')} />
             </div>
@@ -66,9 +66,9 @@ return (
             {/* Input for "الاختصاص القضائي" */}
             <div>
                 <label className="mb-3 block text-black dark:text-white">
-                    الاختصاص القضائي
+                    المأمورية التابع لها
                 </label>
-                <input type="text" placeholder="الاختصاص القضائي"
+                <input type="text" placeholder="المأمورية التابع لها"
                     className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                     value={vat.jurisdiction} onChange={inputBindHandler('jurisdiction')} />
             </div>
@@ -77,9 +77,9 @@ return (
             {/* Input for "تاريخ الانتهاء" */}
             <div>
                 <label className="mb-3 block text-black dark:text-white">
-                    تاريخ التسجيل
+                    تاريخ التسجيل 
                 </label>
-                <input type="date" placeholder="تاريخ التسجيل"
+                <input type="date" placeholder="تاريخ التسجيل "
                     className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                     value={vat.registrationDate} onChange={inputBindHandler('registrationDate')} />
             </div>
@@ -88,9 +88,9 @@ return (
             {/* Input for "تاريخ الانتهاء" */}
             <div>
                 <label className="mb-3 block text-black dark:text-white">
-                    تاريخ الانتهاء
+                    تاريخ انتهاء شهادة التسجيل 
                 </label>
-                <input type="date" placeholder="تاريخ الانتهاء"
+                <input type="date" placeholder="تاريخ انتهاء شهادة التسجيل "
                     className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                     value={vat.expiryDate} onChange={inputBindHandler('expiryDate')} />
             </div>

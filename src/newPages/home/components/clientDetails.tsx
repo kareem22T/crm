@@ -55,6 +55,8 @@ const Client: React.FC<formProps> = ({client_prop}) => {
       setSelectedTab(slectedTabE || slectedTab);
       if (slectedTabE = 2) 
             setShowBranchForm(false)
+      if (slectedTabE = 3) 
+            setShowVatForm(false)
     };
 
     const handleClickUpdateBtn = () => {

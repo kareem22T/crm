@@ -1,7 +1,7 @@
 import * as React from 'react';
 import DefaultLayout from '../../layout/DefaultLayout';
 import "./style.css"
-import { clientRow, creteClient, getClients, ClientType } from '../../services/clientServices';
+import { clientRow, creteClient, getClients, ClientType, deleteClient } from '../../services/clientServices';
 import Table from './components/table';
 import ClientForm from './components/createClient';
 import Client from './components/clientDetails';
@@ -41,6 +41,21 @@ export default function Home() {
     setShowClientForm(false)
   }
 
+  const handleDeleteClient = (id: number) => {
+    deleteClient(id).then(res => {
+        if (res.data.isSuccess == true) {
+          showSuccessMsg("تم حذف العميل بنجاح")
+          getClients(10, 1).then(data => {
+
+            setClints(data.data.data)
+      
+          }).catch(error => {
+              console.error(error);
+          });      
+        }
+    })
+  }
+
   // show client
   const handleGoToList = () => {
     setShowClientDetails(false)
@@ -52,6 +67,8 @@ export default function Home() {
     getClients(10, 1).then(data => {
 
       setClints(data.data.data)
+      if (data.data.data.length === 0)
+        setShowClientForm(true)
 
     }).catch(error => {
         console.error(error);
@@ -74,7 +91,7 @@ export default function Home() {
                 <button className="inline-flex bg-primary items-center justify-center gap-2.5 rounded-full bg-meta-3 py-2 px-5 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-5" onClick={() => setShowClientForm(true)}>اضافة عميل</button>
               </nav>
             </div>
-            <Table clients={clients} showClient={handleShowClient} />
+            <Table clients={clients} deleteClient={handleDeleteClient} showClient={handleShowClient} />
           </>
         )
       }
