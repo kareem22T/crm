@@ -309,6 +309,7 @@ const Client: React.FC<formProps> = ({client_prop, goBack}) => {
                 getContracts(10, 1, client.id)
                 .then(data => {
                     setContracts(data.data.data)
+                    setShowContractsForm(false);
                 })
                 .catch(error => {
                     console.error(error);
@@ -340,6 +341,7 @@ const Client: React.FC<formProps> = ({client_prop, goBack}) => {
                 getAuthorizations(10, 1, client.id)
                 .then(data => {
                     setAuthorizations(data.data.data)
+                    setShowAuthorizationsForm(false);
                 })
                 .catch(error => {
                     console.error(error);
