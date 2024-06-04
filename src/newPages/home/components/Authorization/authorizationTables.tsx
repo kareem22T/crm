@@ -119,10 +119,10 @@ const AuthorizationList: React.FC<TableProps> = ({ Authorizations, client_id, de
                                     <p className="text-black dark:text-white">{formateDateInArabic(Authorization.dateAuthorization)}</p>
                                 </td>
                                 <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
-                                    <p className="text-black dark:text-white">{formateDateInArabic(Authorization.principal)}</p>
+                                    <p className="text-black dark:text-white">{Authorization.principal}</p>
                                 </td>
                                 <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
-                                    <p className="text-black dark:text-white">{formateDateInArabic(Authorization.principalType)}</p>
+                                    <p className="text-black dark:text-white">{Authorization.principalType}</p>
                                 </td>
                 
                                 <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">

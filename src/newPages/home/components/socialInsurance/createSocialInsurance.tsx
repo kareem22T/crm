@@ -30,12 +30,12 @@ setSocialInsurance({ ...socialInsurance, [key]: e.target.value });
 };
 
 const handleValidateNCreate = () => {
-let error = validateSocialInsurance(socialInsurance)
-if (error) {
-showErrorMessage(error)
-} else {
-createMethod(socialInsurance)
-}
+    let error = validateSocialInsurance(socialInsurance)
+    if (error) {
+        showErrorMessage(error)
+    } else {
+        createMethod(socialInsurance)
+    }
 }
 
 return (

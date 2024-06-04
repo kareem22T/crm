@@ -27,6 +27,8 @@ import { ContractRow, ContractType, createContract, deleteContract, getContracts
 import ContractList from "../contract/contractsTable";
 import ContractForm from "../contract/createContract";
 import AuthorizationForm from "../Authorization/createAuthorization";
+import AuthorizationList from "../Authorization/authorizationTables";
+import { AuthorizationRow, AuthorizationType, createAuthorization, deleteAuthorization, getAuthorizations } from "../../../../services/AuthorizationServices";
 
 interface formProps {
     client_prop: clientRow,
@@ -49,6 +51,7 @@ const Client: React.FC<formProps> = ({client_prop, goBack}) => {
     const [socialInsurances, setSocialInsurances] = React.useState<SocialInsuranceRow[]>([]);
     const [partners, setPartners] = React.useState<PartnerRow[]>([]);
     const [taxExaminations, setTaxExaminations] = React.useState<TaxExaminationRow[]>([]);
+    const [Authorizations, setAuthorizations] = React.useState<AuthorizationRow[]>([]);
     const [contracts, setContracts] = React.useState<ContractRow[]>([]);
     const [showBranchForm, setShowBranchForm] = React.useState<boolean>(false)
     const [showSocialInsuranceForm, setShowSocialInsurance] = React.useState<boolean>(false)
@@ -180,7 +183,7 @@ const Client: React.FC<formProps> = ({client_prop, goBack}) => {
                     showSuccessMsg("تم الاضافة بنجاح")
                     getGeneralTaxs(10, 1, client.id).then(data => {
                         setGeneralTaxes(data.data.data)
-                
+                        setShowGeneralTaxForm(false)
                     }).catch(error => {
                         console.error(error);
                     });
@@ -210,7 +213,8 @@ const Client: React.FC<formProps> = ({client_prop, goBack}) => {
                     getSocialInsurances(10, 1, client.id).then(data => {
     
                         setSocialInsurances(data.data.data)
-                
+                        setShowSocialInsurance(false)
+
                     }).catch(error => {
                         console.error(error);
                     });
@@ -240,7 +244,8 @@ const Client: React.FC<formProps> = ({client_prop, goBack}) => {
                     getPartners(10, 1, client.id).then(data => {
     
                         setPartners(data.data.data)
-                
+                        setShowPartner(false)
+
                     }).catch(error => {
                         console.error(error);
                     });
@@ -271,6 +276,7 @@ const Client: React.FC<formProps> = ({client_prop, goBack}) => {
                 getTaxExaminations(10, 1, client.id).then(data => {
 
                     setTaxExaminations(data.data.data)
+                    setShowTaxExamination(false)
             
                 }).catch(error => {
                     console.error(error);
@@ -296,8 +302,6 @@ const Client: React.FC<formProps> = ({client_prop, goBack}) => {
         })
     }
 
-  
-
     const handleCreateContract = (contract: ContractType) => {
         createContract(contract, client.id).then(res => {
             if (res.data.isSuccess == true) {
@@ -310,6 +314,36 @@ const Client: React.FC<formProps> = ({client_prop, goBack}) => {
                     console.error(error);
                 });
             
+            }
+        })        
+    }
+
+    const handleDeleteAuthorization = (id: number) => {
+        deleteAuthorization(id, client.id).then(res => {
+            if(res.data.isSuccess) {
+                showSuccessMsg("تم الحذف بنجاح")
+                getAuthorizations(10, 1, client.id)
+                .then(data => {
+                    setAuthorizations(data.data.data)
+                })
+                .catch(error => {
+                    console.error(error);
+                });            
+            }
+        })
+    }
+
+    const handleCreateAuthorization = (authorization: AuthorizationType) => {
+        createAuthorization(authorization, client.id).then(res => {
+            if (res.data.isSuccess == true) {
+                showSuccessMsg("تم الاضافة بنجاح")
+                getAuthorizations(10, 1, client.id)
+                .then(data => {
+                    setAuthorizations(data.data.data)
+                })
+                .catch(error => {
+                    console.error(error);
+                });
             }
         })        
     }
@@ -372,6 +406,13 @@ const Client: React.FC<formProps> = ({client_prop, goBack}) => {
             console.error(error);
         });
 
+        getAuthorizations(10, 1, client.id)
+        .then(data => {
+            setAuthorizations(data.data.data)
+        })
+        .catch(error => {
+            console.error(error);
+        });
     }, []);     
 
     React.useEffect(() => {
@@ -423,10 +464,18 @@ const Client: React.FC<formProps> = ({client_prop, goBack}) => {
                 .catch(error => {
                     console.error(error);
                 });
-        }else if (slectedTab === 8) {
+        } else if (slectedTab === 8) {
             getContracts(10, 1, client.id)
                 .then(data => {
                     setContracts(data.data.data)
+                })
+                .catch(error => {
+                    console.error(error);
+                });
+        } else if (slectedTab === 9) {
+            getAuthorizations(10, 1, client.id)
+                .then(data => {
+                    setAuthorizations(data.data.data)
                 })
                 .catch(error => {
                     console.error(error);
@@ -836,6 +885,20 @@ const Client: React.FC<formProps> = ({client_prop, goBack}) => {
                                 </>
                             ) : (
                                 <ContractForm Back={() => setShowContractsForm(false)} createMethod={handleCreateContract}/>
+                            )
+                        )
+                    )
+                }
+                 
+                {
+                    slectedTab == 9 && (
+                        (
+                            Authorizations && Authorizations.length > 0 && !showAuthorizationsForm ? (
+                                <>
+                                    <AuthorizationList Authorizations={Authorizations} client_id={client.id} deleteAuthorization={handleDeleteAuthorization} goToAdd={() => setShowAuthorizationsForm(true)}/>
+                                </>
+                            ) : (
+                                <AuthorizationForm Back={() => setShowAuthorizationsForm(false)} createMethod={handleCreateAuthorization}/>
                             )
                         )
                     )
