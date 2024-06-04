@@ -11,6 +11,21 @@ import { VatRow, VatType, createVat, deleteVat, getVats } from "../../../../serv
 import VatList from "../vats/vatsTable";
 import VatForm from "../vats/createVat";
 import { formatDate } from "../../../../services/globalMethods";
+import { GeneralTaxRow, GeneralTaxType, createGeneralTax, deleteGeneralTax, getGeneralTaxs } from "../../../../services/generalTaxServices";
+import GeneralTaxList from "../generalTaxes/generalTaxes";
+import GeneralTaxForm from "../generalTaxes/createGeneralTax";
+import { SocialInsuranceRow, SocialInsuranceType, createSocialInsurance, deleteSocialInsurance, getSocialInsurances } from "../../../../services/socialInsuranceServices";
+import SocialInsuranceList from "../socialInsurance/socialInsurancesTable";
+import SocialInsuranceForm from "../socialInsurance/createSocialInsurance";
+import PartnerList from "../partner/partnersTable";
+import PartnerForm from "../partner/createPartner";
+import { PartnerRow, PartnerType, createPartner, deletePartner, getPartners } from "../../../../services/partnerServices";
+import { TaxExaminationRow, TaxExaminationType, createTaxExamination, deleteTaxExamination, getTaxExaminations } from "../../../../services/taxExaminationServices";
+import TaxExaminationList from "../taxExamination/taxExaminationsTable";
+import TaxExaminationForm from "../taxExamination/createTaxExamination";
+import { ContractRow, ContractType, createContract, deleteContract, getContracts } from "../../../../services/contractServices";
+import ContractList from "../contract/contractsTable";
+import ContractForm from "../contract/createContract";
 
 interface formProps {
     client_prop: clientRow,
@@ -29,8 +44,18 @@ const Client: React.FC<formProps> = ({client_prop, goBack}) => {
     const [slectedTab, setSelectedTab] = React.useState(1);
     const [brnaches, setBranches] = React.useState<BranchRow[]>([]);
     const [vats, setVats] = React.useState<VatRow[]>([]);
+    const [generalTaxes, setGeneralTaxes] = React.useState<GeneralTaxRow[]>([]);
+    const [socialInsurances, setSocialInsurances] = React.useState<SocialInsuranceRow[]>([]);
+    const [partners, setPartners] = React.useState<PartnerRow[]>([]);
+    const [taxExaminations, setTaxExaminations] = React.useState<TaxExaminationRow[]>([]);
+    const [contracts, setContracts] = React.useState<ContractRow[]>([]);
     const [showBranchForm, setShowBranchForm] = React.useState<boolean>(false)
+    const [showSocialInsuranceForm, setShowSocialInsurance] = React.useState<boolean>(false)
+    const [showGeneralTaxForm, setShowGeneralTaxForm] = React.useState<boolean>(false)
     const [showVatForm, setShowVatForm] = React.useState<boolean>(false)
+    const [showPartner, setShowPartner] = React.useState<boolean>(false)
+    const [showTaxExamination, setShowTaxExamination] = React.useState<boolean>(false)
+    const [showContractsForm, setShowContractsForm] = React.useState<boolean>(false)
     const [isUpdate, setIsUpdate] = React.useState<boolean>(false)
     
     const inputBindHandler = (key: keyof clientRow) => (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -46,6 +71,16 @@ const Client: React.FC<formProps> = ({client_prop, goBack}) => {
             setShowBranchForm(false)
       if (slectedTabE = 3) 
             setShowVatForm(false)
+      if (slectedTabE = 4) 
+            setShowSocialInsurance(false)
+      if (slectedTabE = 5) 
+            setShowGeneralTaxForm(false)
+      if (slectedTabE = 6) 
+            setShowPartner(false)
+      if (slectedTabE = 7) 
+            setShowTaxExamination(false)
+      if (slectedTabE = 8) 
+            setShowContractsForm(false)
     };
 
     const handleClickUpdateBtn = () => {
@@ -120,6 +155,154 @@ const Client: React.FC<formProps> = ({client_prop, goBack}) => {
         })
     }
 
+    const handleDeleteGeneralTax = (id: number) => {
+        deleteGeneralTax(id, client.id).then(res => {
+            if(res.data.isSuccess) {
+                showSuccessMsg("تم الحذف بنجاح")
+                getGeneralTaxs(10, 1, client.id).then(data => {
+    
+                    setGeneralTaxes(data.data.data)
+            
+                }).catch(error => {
+                    console.error(error);
+                });
+            }
+        })
+    }
+
+    const handleCreateGeneralTax = (generalTax: GeneralTaxType) => {
+        createGeneralTax(generalTax, client.id).then(res => {
+                if (res.data.isSuccess == true) {
+                    getGeneralTaxs(10, 1, client.id).then(data => {
+    
+                        setGeneralTaxes(data.data.data)
+                
+                    }).catch(error => {
+                        console.error(error);
+                    });
+                }
+        })        
+    }
+
+    const handleDeleteSocialInsurance = (id: number) => {
+        deleteSocialInsurance(id, client.id).then(res => {
+            if(res.data.isSuccess) {
+                showSuccessMsg("تم الحذف بنجاح")
+                getSocialInsurances(10, 1, client.id).then(data => {
+    
+                    setSocialInsurances(data.data.data)
+            
+                }).catch(error => {
+                    console.error(error);
+                });
+            }
+        })
+    }
+
+    const handleCreateSocialInsurance = (socialInsurance: SocialInsuranceType) => {
+        createSocialInsurance(socialInsurance, client.id).then(res => {
+                if (res.data.isSuccess == true) {
+                    getSocialInsurances(10, 1, client.id).then(data => {
+    
+                        setSocialInsurances(data.data.data)
+                
+                    }).catch(error => {
+                        console.error(error);
+                    });
+                }
+        })        
+    }
+
+    const handleDeletePartner = (id: number) => {
+        deletePartner(id, client.id).then(res => {
+            if(res.data.isSuccess) {
+                showSuccessMsg("تم الحذف بنجاح")
+                getPartners(10, 1, client.id).then(data => {
+    
+                    setPartners(data.data.data)
+            
+                }).catch(error => {
+                    console.error(error);
+                });
+            }
+        })
+    }
+
+    const handleCreatePartner = (partner: PartnerType) => {
+        createPartner(partner, client.id).then(res => {
+                if (res.data.isSuccess == true) {
+                    getPartners(10, 1, client.id).then(data => {
+    
+                        setPartners(data.data.data)
+                
+                    }).catch(error => {
+                        console.error(error);
+                    });
+                }
+        })        
+    }
+
+    const handleDeleteTaxExamination = (id: number) => {
+        deleteTaxExamination(id, client.id).then(res => {
+            if(res.data.isSuccess) {
+                showSuccessMsg("تم الحذف بنجاح")
+                getTaxExaminations(10, 1, client.id).then(data => {
+    
+                    setTaxExaminations(data.data.data)
+            
+                }).catch(error => {
+                    console.error(error);
+                });
+            
+            }
+        })
+    }
+
+    const handleCreateTaxExamination = (taxExamination: TaxExaminationType) => {
+        createTaxExamination(taxExamination, client.id).then(res => {
+            if (res.data.isSuccess == true) {
+                getTaxExaminations(10, 1, client.id).then(data => {
+
+                    setTaxExaminations(data.data.data)
+            
+                }).catch(error => {
+                    console.error(error);
+                });
+            
+            }
+        })        
+    }
+
+    const handleDeleteContract = (id: number) => {
+        deleteContract(id, client.id).then(res => {
+            if(res.data.isSuccess) {
+                showSuccessMsg("تم الحذف بنجاح")
+                getContracts(10, 1, client.id)
+                .then(data => {
+                    setContracts(data.data.data)
+                })
+                .catch(error => {
+                    console.error(error);
+                });
+            
+            }
+        })
+    }
+
+    const handleCreateContract = (contract: ContractType) => {
+        createContract(contract, client.id).then(res => {
+            if (res.data.isSuccess == true) {
+                getContracts(10, 1, client.id)
+                .then(data => {
+                    setContracts(data.data.data)
+                })
+                .catch(error => {
+                    console.error(error);
+                });
+            
+            }
+        })        
+    }
 
     React.useEffect(() => {
 
@@ -139,10 +322,110 @@ const Client: React.FC<formProps> = ({client_prop, goBack}) => {
             console.error(error);
         });
     
-    }, [slectedTab]);     
-    return (
+        getGeneralTaxs(10, 1, client.id).then(data => {
+    
+            setGeneralTaxes(data.data.data)
+    
+        }).catch(error => {
+            console.error(error);
+        });
+
+        getSocialInsurances(10, 1, client.id).then(data => {
+    
+            setSocialInsurances(data.data.data)
+    
+        }).catch(error => {
+            console.error(error);
+        });
+
+        getPartners(10, 1, client.id).then(data => {
+    
+            setPartners(data.data.data)
+    
+        }).catch(error => {
+            console.error(error);
+        });
+    
+        getTaxExaminations(10, 1, client.id).then(data => {
+    
+            setTaxExaminations(data.data.data)
+    
+        }).catch(error => {
+            console.error(error);
+        });
+
+        getContracts(10, 1, client.id)
+        .then(data => {
+            setContracts(data.data.data)
+        })
+        .catch(error => {
+            console.error(error);
+        });
+
+    }, []);     
+
+    React.useEffect(() => {
+        if (slectedTab === 2) {
+            getBranches(10, 1, client.id)
+                .then(data => {
+                    setBranches(data.data.data)
+                })
+                .catch(error => {
+                    console.error(error);
+                });
+        } else if (slectedTab === 3) {
+            getVats(10, 1, client.id)
+                .then(data => {
+                    setVats(data.data.data)
+                })
+                .catch(error => {
+                    console.error(error);
+                });
+        } else if (slectedTab === 4) {
+            getSocialInsurances(10, 1, client.id)
+                .then(data => {
+                    setSocialInsurances(data.data.data)
+                })
+                .catch(error => {
+                    console.error(error);
+                });
+        } else if (slectedTab === 5) {
+            getGeneralTaxs(10, 1, client.id)
+            .then(data => {
+                setGeneralTaxes(data.data.data)
+            })
+            .catch(error => {
+                console.error(error);
+            });
+        } else if (slectedTab === 6) {
+            getPartners(10, 1, client.id)
+                .then(data => {
+                    setPartners(data.data.data)
+                })
+                .catch(error => {
+                    console.error(error);
+                });
+        } else if (slectedTab === 7) {
+            getTaxExaminations(10, 1, client.id)
+                .then(data => {
+                    setTaxExaminations(data.data.data)
+                })
+                .catch(error => {
+                    console.error(error);
+                });
+        }else if (slectedTab === 8) {
+            getContracts(10, 1, client.id)
+                .then(data => {
+                    setContracts(data.data.data)
+                })
+                .catch(error => {
+                    console.error(error);
+                });
+        }
+    }, [slectedTab]);
+        return (
         <>
-            <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+            <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between mb-9">
               <h2 className="text-title-md2 font-semibold text-black dark:text-white">
                 عرض بيانات {client.companyName}
               </h2>
@@ -160,6 +443,31 @@ const Client: React.FC<formProps> = ({client_prop, goBack}) => {
                         onChange={handleToggleTabs}
                         aria-label="Platform"
                         >
+                        <ToggleButton value={8}>
+                            <span className="text-black dark:text-white">
+                                عقود التاسيس
+                            </span>
+                        </ToggleButton>
+                        <ToggleButton value={7}>
+                            <span className="text-black dark:text-white">
+                                الفحص الضريبي
+                            </span>
+                        </ToggleButton>
+                        <ToggleButton value={6}>
+                            <span className="text-black dark:text-white">
+                                الشركاء
+                            </span>
+                        </ToggleButton>
+                        <ToggleButton value={5}>
+                            <span className="text-black dark:text-white">
+                                الضرائب العامة
+                            </span>
+                        </ToggleButton>
+                        <ToggleButton value={4}>
+                            <span className="text-black dark:text-white">
+                                التأمينات الاجتماعية
+                            </span>
+                        </ToggleButton>
                         <ToggleButton value={3}>
                             <span className="text-black dark:text-white">
                                 قيمة مضافة
@@ -448,6 +756,71 @@ const Client: React.FC<formProps> = ({client_prop, goBack}) => {
                                 </>
                             ) : (
                                 <VatForm createMethod={handleCreateVat}/>
+                            )
+                        )
+                    )
+                }
+                {
+                    slectedTab == 4 && (
+                        (
+                            socialInsurances && socialInsurances.length > 0 && !showSocialInsuranceForm ? (
+                                <>
+                                    <SocialInsuranceList socialInsurances={socialInsurances} client_id={client.id} deleteSocialInsurance={handleDeleteSocialInsurance} goToAdd={() => setShowSocialInsurance(true)}/>
+                                </>
+                            ) : (
+                                <SocialInsuranceForm createMethod={handleCreateSocialInsurance}/>
+                            )
+                        )
+                    )
+                }
+                {
+                    slectedTab == 5 && (
+                        (
+                            generalTaxes && generalTaxes.length > 0 && !showGeneralTaxForm ? (
+                                <>
+                                    <GeneralTaxList generalTaxs={generalTaxes} client_id={client.id} deleteGeneralTax={handleDeleteGeneralTax} goToAdd={() => setShowGeneralTaxForm(true)}/>
+                                </>
+                            ) : (
+                                <GeneralTaxForm createMethod={handleCreateGeneralTax}/>
+                            )
+                        )
+                    )
+                }
+                {
+                    slectedTab == 6 && (
+                        (
+                            partners && partners.length > 0 && !showPartner ? (
+                                <>
+                                    <PartnerList partners={partners} client_id={client.id} deletePartner={handleDeletePartner} goToAdd={() => setShowPartner(true)}/>
+                                </>
+                            ) : (
+                                <PartnerForm createMethod={handleCreatePartner}/>
+                            )
+                        )
+                    )
+                }
+                {
+                    slectedTab == 7 && (
+                        (
+                            taxExaminations && taxExaminations.length > 0 && !showTaxExamination ? (
+                                <>
+                                    <TaxExaminationList taxExaminations={taxExaminations} client_id={client.id} deleteTaxExamination={handleDeleteTaxExamination} goToAdd={() => setShowTaxExamination(true)}/>
+                                </>
+                            ) : (
+                                <TaxExaminationForm createMethod={handleCreateTaxExamination}/>
+                            )
+                        )
+                    )
+                }
+                {
+                    slectedTab == 8 && (
+                        (
+                            contracts && contracts.length > 0 && !showContractsForm ? (
+                                <>
+                                    <ContractList contracts={contracts} client_id={client.id} deleteContract={handleDeleteContract} goToAdd={() => setShowContractsForm(true)}/>
+                                </>
+                            ) : (
+                                <ContractForm createMethod={handleCreateContract}/>
                             )
                         )
                     )
