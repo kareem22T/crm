@@ -14,6 +14,12 @@ const showSuccessMsg = (msg:string) => {
   });
 };
 
+const showErrorMessage = (msg:string) => {
+  toast.error(msg, {
+    position: toast.POSITION.TOP_RIGHT,
+  });
+};
+
 export default function Home() {
   const [clients, setClints] = React.useState<clientRow[]>([]);
   const [showClientForm, setShowClientForm] = React.useState<boolean>(false)
@@ -32,6 +38,9 @@ export default function Home() {
         showSuccessMsg("تم اضافة العميل بنجاح")
       }
     })
+    .catch(() => {
+      showErrorMessage("حدث خطا ما حاول مرة اخري")
+    });
   }
 
   // show client
@@ -54,6 +63,9 @@ export default function Home() {
           });      
         }
     })
+    .catch(() => {
+      showErrorMessage("حدث خطا ما حاول مرة اخري")
+    });
   }
 
   // show client

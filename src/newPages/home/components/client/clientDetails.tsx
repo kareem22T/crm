@@ -41,6 +41,12 @@ const showSuccessMsg = (msg:string) => {
     });
   };
   
+const showErrorMessage = (msg:string) => {
+    toast.error(msg, {
+      position: toast.POSITION.TOP_RIGHT,
+    });
+  };
+  
   
 const Client: React.FC<formProps> = ({client_prop, goBack}) => {
     const [client, setClient] = useState<clientRow>(client_prop);
@@ -101,6 +107,9 @@ const Client: React.FC<formProps> = ({client_prop, goBack}) => {
                     setIsUpdate(false)
                 }
             })
+            .catch(() => {
+                showErrorMessage("حدث خطا ما حاول مرة اخري")
+              });              
         }
       }
     
@@ -116,6 +125,9 @@ const Client: React.FC<formProps> = ({client_prop, goBack}) => {
                 });
             }
         })        
+        .catch(() => {
+            showErrorMessage("حدث خطا ما حاول مرة اخري")
+          });          
     }
 
     const handleDeleteBranch = (id: number) => {
@@ -131,6 +143,9 @@ const Client: React.FC<formProps> = ({client_prop, goBack}) => {
                 });        
             }
         })
+        .catch(() => {
+            showErrorMessage("حدث خطا ما حاول مرة اخري")
+          });          
     }
 
     const handleCreateVat = (vat: VatType) => {
@@ -145,6 +160,10 @@ const Client: React.FC<formProps> = ({client_prop, goBack}) => {
                     });
                 }
             })        
+            .catch(() => {
+                showErrorMessage("حدث خطا ما حاول مرة اخري")
+              });          
+    
     }
 
     const handleDeleteVat = (id: number) => {
@@ -160,6 +179,9 @@ const Client: React.FC<formProps> = ({client_prop, goBack}) => {
                 });        
             }
         })
+        .catch(() => {
+            showErrorMessage("حدث خطا ما حاول مرة اخري")
+          });          
     }
 
     const handleDeleteGeneralTax = (id: number) => {
@@ -175,6 +197,9 @@ const Client: React.FC<formProps> = ({client_prop, goBack}) => {
                 });
             }
         })
+        .catch(() => {
+            showErrorMessage("حدث خطا ما حاول مرة اخري")
+          });          
     }
 
     const handleCreateGeneralTax = (generalTax: GeneralTaxType) => {
@@ -188,7 +213,10 @@ const Client: React.FC<formProps> = ({client_prop, goBack}) => {
                         console.error(error);
                     });
                 }
-        })        
+        })  
+        .catch(() => {
+            showErrorMessage("حدث خطا ما حاول مرة اخري")
+          });                
     }
 
     const handleDeleteSocialInsurance = (id: number) => {
@@ -204,6 +232,9 @@ const Client: React.FC<formProps> = ({client_prop, goBack}) => {
                 });
             }
         })
+        .catch(() => {
+            showErrorMessage("حدث خطا ما حاول مرة اخري")
+          });          
     }
 
     const handleCreateSocialInsurance = (socialInsurance: SocialInsuranceType) => {
@@ -220,6 +251,9 @@ const Client: React.FC<formProps> = ({client_prop, goBack}) => {
                     });
                 }
         })        
+        .catch(() => {
+            showErrorMessage("حدث خطا ما حاول مرة اخري")
+          });          
     }
 
     const handleDeletePartner = (id: number) => {
@@ -235,6 +269,9 @@ const Client: React.FC<formProps> = ({client_prop, goBack}) => {
                 });
             }
         })
+        .catch(() => {
+            showErrorMessage("حدث خطا ما حاول مرة اخري")
+          });          
     }
 
     const handleCreatePartner = (partner: PartnerType) => {
@@ -251,6 +288,9 @@ const Client: React.FC<formProps> = ({client_prop, goBack}) => {
                     });
                 }
         })        
+        .catch(() => {
+            showErrorMessage("حدث خطا ما حاول مرة اخري")
+          });          
     }
 
     const handleDeleteTaxExamination = (id: number) => {
@@ -267,6 +307,9 @@ const Client: React.FC<formProps> = ({client_prop, goBack}) => {
             
             }
         })
+        .catch(() => {
+            showErrorMessage("حدث خطا ما حاول مرة اخري")
+          });          
     }
 
     const handleCreateTaxExamination = (taxExamination: TaxExaminationType) => {
@@ -283,7 +326,10 @@ const Client: React.FC<formProps> = ({client_prop, goBack}) => {
                 });
             
             }
-        })        
+        })    
+        .catch(() => {
+            showErrorMessage("حدث خطا ما حاول مرة اخري")
+          });          
     }
 
     const handleDeleteContract = (id: number) => {
@@ -300,6 +346,9 @@ const Client: React.FC<formProps> = ({client_prop, goBack}) => {
             
             }
         })
+        .catch(() => {
+            showErrorMessage("حدث خطا ما حاول مرة اخري")
+          });          
     }
 
     const handleCreateContract = (contract: ContractType) => {
@@ -317,6 +366,9 @@ const Client: React.FC<formProps> = ({client_prop, goBack}) => {
             
             }
         })        
+        .catch(() => {
+            showErrorMessage("حدث خطا ما حاول مرة اخري")
+          });          
     }
 
     const handleDeleteAuthorization = (id: number) => {
@@ -332,6 +384,9 @@ const Client: React.FC<formProps> = ({client_prop, goBack}) => {
                 });            
             }
         })
+        .catch(() => {
+            showErrorMessage("حدث خطا ما حاول مرة اخري")
+          });          
     }
 
     const handleCreateAuthorization = (authorization: AuthorizationType) => {
@@ -348,6 +403,9 @@ const Client: React.FC<formProps> = ({client_prop, goBack}) => {
                 });
             }
         })        
+        .catch(() => {
+            showErrorMessage("حدث خطا ما حاول مرة اخري")
+          });          
     }
 
     React.useEffect(() => {
@@ -504,7 +562,7 @@ const Client: React.FC<formProps> = ({client_prop, goBack}) => {
                         onChange={handleToggleTabs}
                         aria-label="Platform"
                         >
-                              <ToggleButton value={9}>
+                        <ToggleButton value={9}>
                             <span className="text-black dark:text-white">
                             التوكيلات
                             </span>
@@ -645,92 +703,97 @@ const Client: React.FC<formProps> = ({client_prop, goBack}) => {
                                     />
                                 </div>
                             </div>
-                            <div className="flex flex-col gap-5.5 p-3" >
-                                <div>
-                                    <label className="mb-3 block text-black dark:text-white">
-                                        تاريخ القيد بالسجل التجاري 
-                                    </label>
-                                    <input
-                                        type="date"
-                                        placeholder="تاريخ القيد بالسجل التجاري "
-                                        className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
-                                        value={formatDate(client.entryDate)}
-                                        onChange={inputBindHandler('entryDate')}
-                                        disabled={!isUpdate || false}
-                                    />
+                            <div className="p-5 grid grid-cols-1 gap-2 sm:grid-cols-2 rounded-sm border border-stroke bg-white dark:border-strokedark dark:bg-boxdark my-4" style={{gridColumn: "span 2"}}>
+                                <h2 className="text-black dark:text-white mb-5 text-center border-b pb-4 border-b-stroke" style={{gridColumn: 'span 2', fontWeight: 600, fontSize: 22}}>
+                                    بيانات السجل الضريبي
+                                </h2>
+                                <div className="flex flex-col gap-5.5 p-3" >
+                                    <div>
+                                        <label className="mb-3 block text-black dark:text-white">
+                                            تاريخ القيد بالسجل التجاري 
+                                        </label>
+                                        <input
+                                            type="date"
+                                            placeholder="تاريخ القيد بالسجل التجاري "
+                                            className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                                            value={formatDate(client.entryDate)}
+                                            onChange={inputBindHandler('entryDate')}
+                                            disabled={!isUpdate || false}
+                                        />
+                                    </div>
                                 </div>
-                            </div>
-                            <div className="flex flex-col gap-5.5 p-3" >
-                                <div>
-                                    <label className="mb-3 block text-black dark:text-white">
-                                        جهه صدورة
-                                    </label>
-                                    <input
-                                        type="text"
-                                        placeholder="جهه صدورة"
-                                        className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
-                                        value={client.issuingAuthority}
-                                        onChange={inputBindHandler('issuingAuthority')}
-                                        disabled={!isUpdate || false}
-                                    />
+                                <div className="flex flex-col gap-5.5 p-3" >
+                                    <div>
+                                        <label className="mb-3 block text-black dark:text-white">
+                                            جهه صدورة
+                                        </label>
+                                        <input
+                                            type="text"
+                                            placeholder="جهه صدورة"
+                                            className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                                            value={client.issuingAuthority}
+                                            onChange={inputBindHandler('issuingAuthority')}
+                                            disabled={!isUpdate || false}
+                                        />
+                                    </div>
                                 </div>
-                            </div>
-                            <div className="flex flex-col gap-5.5 p-3" >
-                                <div>
-                                    <label className="mb-3 block text-black dark:text-white">
-                                        رقم السجل التجاري 
-                                    </label>
-                                    <input
-                                        type="text"
-                                        placeholder="رقم السجل التجاري"
-                                        className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
-                                        value={client.commercialRegisterNum}
-                                        onChange={inputBindHandler('commercialRegisterNum')}
-                                        disabled={!isUpdate || false}
-                                    />
+                                <div className="flex flex-col gap-5.5 p-3" >
+                                    <div>
+                                        <label className="mb-3 block text-black dark:text-white">
+                                            رقم السجل التجاري 
+                                        </label>
+                                        <input
+                                            type="text"
+                                            placeholder="رقم السجل التجاري"
+                                            className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                                            value={client.commercialRegisterNum}
+                                            onChange={inputBindHandler('commercialRegisterNum')}
+                                            disabled={!isUpdate || false}
+                                        />
+                                    </div>
                                 </div>
-                            </div>
-                            <div className="flex flex-col gap-5.5 p-3" >
-                                <div>
-                                    <label className="mb-3 block text-black dark:text-white">
-                                        تاريخ صدورة 
-                                    </label>
-                                    <input
-                                        type="date"
-                                        placeholder="تاريخ صدورة "
-                                        className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
-                                        value={formatDate(client.releaseDate)}
-                                        onChange={inputBindHandler('releaseDate')}
-                                        disabled={!isUpdate || false}
-                                    />
+                                <div className="flex flex-col gap-5.5 p-3" >
+                                    <div>
+                                        <label className="mb-3 block text-black dark:text-white">
+                                            تاريخ صدورة 
+                                        </label>
+                                        <input
+                                            type="date"
+                                            placeholder="تاريخ صدورة "
+                                            className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                                            value={formatDate(client.releaseDate)}
+                                            onChange={inputBindHandler('releaseDate')}
+                                            disabled={!isUpdate || false}
+                                        />
+                                    </div>
                                 </div>
-                            </div>
-                            <div className="flex flex-col gap-5.5 p-3" >
-                                <div>
-                                    <label className="mb-3 block text-black dark:text-white">
-                                        تاريخ أخر تجديد 
-                                    </label>
-                                    <input
-                                        type="date"
-                                        className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
-                                        value={formatDate(client.dateLastRenewal)}
-                                        onChange={inputBindHandler('dateLastRenewal')}
-                                        disabled={!isUpdate || false}
-                                    />
+                                <div className="flex flex-col gap-5.5 p-3" >
+                                    <div>
+                                        <label className="mb-3 block text-black dark:text-white">
+                                            تاريخ أخر تجديد 
+                                        </label>
+                                        <input
+                                            type="date"
+                                            className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                                            value={formatDate(client.dateLastRenewal)}
+                                            onChange={inputBindHandler('dateLastRenewal')}
+                                            disabled={!isUpdate || false}
+                                        />
+                                    </div>
                                 </div>
-                            </div>
-                            <div className="flex flex-col gap-5.5 p-3" >
-                                <div>
-                                    <label className="mb-3 block text-black dark:text-white">
-                                        تاريخ اخر سجل
-                                    </label>
-                                    <input
-                                        type="date"
-                                        className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
-                                        value={formatDate(client.dateLastRecord)}
-                                        onChange={inputBindHandler('dateLastRecord')}
-                                        disabled={!isUpdate || false}
-                                    />
+                                <div className="flex flex-col gap-5.5 p-3" >
+                                    <div>
+                                        <label className="mb-3 block text-black dark:text-white">
+                                            تاريخ اخر سجل
+                                        </label>
+                                        <input
+                                            type="date"
+                                            className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                                            value={formatDate(client.dateLastRecord)}
+                                            onChange={inputBindHandler('dateLastRecord')}
+                                            disabled={!isUpdate || false}
+                                        />
+                                    </div>
                                 </div>
                             </div>
                             <div className="flex flex-col gap-5.5 p-3" >

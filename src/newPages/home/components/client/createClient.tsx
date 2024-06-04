@@ -138,89 +138,92 @@ const ClientForm: React.FC<formProps> = ({createMethod}) => {
                         />
                     </div>
                 </div>
-                <br/>
 
-       
-                <div className="flex flex-col gap-5.5 p-3" >
-                    <div>
-                        <label className="mb-3 block text-black dark:text-white">
-                            تاريخ القيد بالسجل التجاري 
-                        </label>
-                        <input
-                            type="date"
-                            placeholder="تاريخ القيد بالسجل التجاري "
-                            className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
-                            value={client.entryDate}
-                            onChange={inputBindHandler('entryDate')}
-                        />
+                <div className="p-5 grid grid-cols-1 gap-2 sm:grid-cols-2 rounded-sm border border-stroke bg-white dark:border-strokedark dark:bg-boxdark my-4" style={{gridColumn: "span 2"}}>
+                    <h2 className="text-black dark:text-white mb-5 text-center border-b pb-4 border-b-stroke" style={{gridColumn: 'span 2', fontWeight: 600, fontSize: 22}}>
+                        بيانات السجل الضريبي
+                    </h2>
+                    <div className="flex flex-col gap-5.5 p-3" >
+                        <div>
+                            <label className="mb-3 block text-black dark:text-white">
+                                تاريخ القيد بالسجل التجاري 
+                            </label>
+                            <input
+                                type="date"
+                                placeholder="تاريخ القيد بالسجل التجاري "
+                                className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                                value={client.entryDate}
+                                onChange={inputBindHandler('entryDate')}
+                            />
+                        </div>
                     </div>
-                </div>
-                <div className="flex flex-col gap-5.5 p-3" >
-                    <div>
-                        <label className="mb-3 block text-black dark:text-white">
-                            جهه صدورة
-                        </label>
-                        <input
-                            type="text"
-                            placeholder="جهه صدورة"
-                            className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
-                            value={client.issuingAuthority}
-                            onChange={inputBindHandler('issuingAuthority')}
-                        />
+                    <div className="flex flex-col gap-5.5 p-3" >
+                        <div>
+                            <label className="mb-3 block text-black dark:text-white">
+                                جهه صدورة
+                            </label>
+                            <input
+                                type="text"
+                                placeholder="جهه صدورة"
+                                className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                                value={client.issuingAuthority}
+                                onChange={inputBindHandler('issuingAuthority')}
+                            />
+                        </div>
                     </div>
-                </div>
-                <div className="flex flex-col gap-5.5 p-3" >
-                    <div>
-                        <label className="mb-3 block text-black dark:text-white">
-                            رقم السجل التجاري 
-                        </label>
-                        <input
-                            type="text"
-                            placeholder="رقم السجل التجاري"
-                            className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
-                            value={client.commercialRegisterNum}
-                            onChange={inputBindHandler('commercialRegisterNum')}
-                        />
+                    <div className="flex flex-col gap-5.5 p-3" >
+                        <div>
+                            <label className="mb-3 block text-black dark:text-white">
+                                رقم السجل التجاري 
+                            </label>
+                            <input
+                                type="text"
+                                placeholder="رقم السجل التجاري"
+                                className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                                value={client.commercialRegisterNum}
+                                onChange={inputBindHandler('commercialRegisterNum')}
+                            />
+                        </div>
+                    </div >
+                    <div className="flex flex-col gap-5.5 p-3" >
+                        <div>
+                            <label className="mb-3 block text-black dark:text-white">
+                                تاريخ صدورة 
+                            </label>
+                            <input
+                                type="date"
+                                placeholder="تاريخ صدورة "
+                                className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                                value={client.releaseDate}
+                                onChange={inputBindHandler('releaseDate')}
+                            />
+                        </div>
                     </div>
-                </div >
-                <div className="flex flex-col gap-5.5 p-3" >
-                    <div>
-                        <label className="mb-3 block text-black dark:text-white">
-                            تاريخ صدورة 
-                        </label>
-                        <input
-                            type="date"
-                            placeholder="تاريخ صدورة "
-                            className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
-                            value={client.releaseDate}
-                            onChange={inputBindHandler('releaseDate')}
-                        />
+                    <div className="flex flex-col gap-5.5 p-3" >
+                        <div>
+                            <label className="mb-3 block text-black dark:text-white">
+                                تاريخ أخر تجديد 
+                            </label>
+                            <input
+                                type="date"
+                                className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                                value={client.dateLastRenewal}
+                                onChange={inputBindHandler('dateLastRenewal')}
+                            />
+                        </div>
                     </div>
-                </div>
-                <div className="flex flex-col gap-5.5 p-3" >
-                    <div>
-                        <label className="mb-3 block text-black dark:text-white">
-                            تاريخ أخر تجديد 
-                        </label>
-                        <input
-                            type="date"
-                            className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
-                            value={client.dateLastRenewal}
-                            onChange={inputBindHandler('dateLastRenewal')}
-                        />
-                    </div>
-                </div>
-                <div className="flex flex-col gap-5.5 p-3" >
-                    <div>
-                        <label className="mb-3 block text-black dark:text-white">
-                            تاريخ اخر سجل
-                        </label>
-                        <input
-                            type="date"
-                            className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
-                            value={client.dateLastRecord}
-                            onChange={inputBindHandler('dateLastRecord')}
-                        />
+                    <div className="flex flex-col gap-5.5 p-3" >
+                        <div>
+                            <label className="mb-3 block text-black dark:text-white">
+                                تاريخ اخر سجل
+                            </label>
+                            <input
+                                type="date"
+                                className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                                value={client.dateLastRecord}
+                                onChange={inputBindHandler('dateLastRecord')}
+                            />
+                        </div>
                     </div>
                 </div>
                
