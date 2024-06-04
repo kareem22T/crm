@@ -4,7 +4,7 @@ import { MetaData } from '../types/metadata';
 
 // Get clients
 export function getContracts(PageSize: number, PageNumber: number, clientId: number): Promise<getContractesResponse> {
-    return axios.get<getContractesResponse>(`${API_URL}/api/Client/${clientId}/VAT`, {
+    return axios.get<getContractesResponse>(`${API_URL}/api/Client/${clientId}/Contract`, {
         params: {
             PageSize,
             PageNumber
@@ -18,17 +18,17 @@ export function getContracts(PageSize: number, PageNumber: number, clientId: num
 
 // Create Contract
 export function createContract(contract: ContractType, clientId: number) {
-    return axios.post(`${API_URL}/api/Client/${clientId}/VAT`, contract);
+    return axios.post(`${API_URL}/api/Client/${clientId}/Contract`, contract);
 }
 
 // Update Contract
 export function updateContract(contract: ContractRow, clientId: number) {
-    return axios.put(`${API_URL}/api/Client/${clientId}/VAT`, contract);
+    return axios.put(`${API_URL}/api/Client/${clientId}/Contract`, contract);
 }
 
 // Delete contract
 export function deleteContract(id:number, clientId: number) {
-    return axios.delete(`${API_URL}/api/Client/${clientId}/VAT/${id}`);
+    return axios.delete(`${API_URL}/api/Client/${clientId}/Contract/${id}`);
 }
 
 // types and interface

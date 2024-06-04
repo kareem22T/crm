@@ -116,7 +116,7 @@ const GeneralTaxList: React.FC<TableProps> = ({ generalTaxs, client_id, deleteGe
                                     <p className="text-black dark:text-white">{generalTax.activityStartDate}</p>
                                 </td>
                                 <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
-                                    <p className="text-black dark:text-white">{generalTax.taxCardIssueDate}</p>
+                                    <p className="text-black dark:text-white">{generalTax.taxCardIssueDate.toString("dd/MM/yyy")}</p>
                                 </td>
                                 <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
                                     <p className="text-black dark:text-white">{generalTax.taxCardExpiryDate}</p>
