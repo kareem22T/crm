@@ -3,6 +3,7 @@ import { BranchRow, updateBranch } from '../../../../services/branchesServices';
 import BranchDetails from './branchDetails';
 import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
+import { formateDateInArabic } from '../../../../services/globalMethods';
 
 interface TableProps {
     branchs: BranchRow[],
@@ -120,7 +121,7 @@ const BranchesList: React.FC<TableProps> = ({ branchs, goToAdd, client_id, delet
                                   <p className="text-black dark:text-white">{branch.email}</p>
                               </td>
                               <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
-                                  <p className="text-black dark:text-white">{branch.dateRentalContract}</p>
+                                  <p className="text-black dark:text-white">{formateDateInArabic(branch.dateRentalContract)}</p>
                               </td>
                               <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
                                 <button onClick={() => showBranch(branch)} className="inline-flex bg-blck items-center justify-center gap-2.5 rounded-full bg-meta-3 py-2 px-4 text-center font-medium text-white hover:bg-opacity-90 lg:px-4 xl:px-4">

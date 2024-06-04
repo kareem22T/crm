@@ -3,6 +3,7 @@ import { GeneralTaxRow, updateGeneralTax } from '../../../../services/generalTax
 import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
 import GeneralTaxDetails from "./generalTaxDetails"
+import { formateDateInArabic } from '../../../../services/globalMethods';
 
 interface TableProps {
     generalTaxs: GeneralTaxRow[],
@@ -113,19 +114,19 @@ const GeneralTaxList: React.FC<TableProps> = ({ generalTaxs, client_id, deleteGe
                                     <p className="text-black dark:text-white">{generalTax.jurisdiction}</p>
                                 </td>
                                 <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
-                                    <p className="text-black dark:text-white">{generalTax.activityStartDate}</p>
+                                    <p className="text-black dark:text-white">{formateDateInArabic(generalTax.activityStartDate)}</p>
                                 </td>
                                 <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
-                                    <p className="text-black dark:text-white">{generalTax.taxCardIssueDate}</p>
+                                    <p className="text-black dark:text-white">{formateDateInArabic(generalTax.taxCardIssueDate)}</p>
                                 </td>
                                 <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
-                                    <p className="text-black dark:text-white">{generalTax.taxCardExpiryDate}</p>
+                                    <p className="text-black dark:text-white">{formateDateInArabic(generalTax.taxCardExpiryDate)}</p>
                                 </td>
                                 <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
                                     <p className="text-black dark:text-white">{generalTax.subjectAdvancePayments}</p>
                                 </td>
                                 <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
-                                    <p className="text-black dark:text-white">{generalTax.periodSubjectAdvancePayments}</p>
+                                    <p className="text-black dark:text-white">{formateDateInArabic(generalTax.periodSubjectAdvancePayments)}</p>
                                 </td>
                                 <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
                                   <div className='flex'>
