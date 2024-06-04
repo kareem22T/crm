@@ -6,7 +6,8 @@ import { validatePartner } from "./partnerRequest";
 
 interface formProps {
     updateMethod: (partner: PartnerRow) => boolean,
-    partner_prop: PartnerRow
+    partner_prop: PartnerRow,
+    Back:()=>void
 }
 
 const showErrorMessage = (msg:string) => {
@@ -22,14 +23,16 @@ const showSuccessMsg = (msg:string) => {
   
 
 
-const PartnerDetails: React.FC<formProps> = ({updateMethod, partner_prop}) => {
+const PartnerDetails: React.FC<formProps> = ({updateMethod, partner_prop,Back}) => {
     const [partner, setPartner] = useState<PartnerRow>(partner_prop);
     const [isUpdate, setIsUpdate] = React.useState<boolean>(false)
 
     const inputBindHandler = (key: keyof PartnerRow) => (e: React.ChangeEvent<HTMLInputElement>) => {
         setPartner({ ...partner, [key]: e.target.value });    
     };
-    
+    const handleBack= ()=>{
+        Back();
+    }
     const handleUpdate = () => {
         
         if (isUpdate) {
@@ -101,8 +104,11 @@ const PartnerDetails: React.FC<formProps> = ({updateMethod, partner_prop}) => {
                     />
             </div>
         </div>
-                <div className="flex flex-col gap-5.5 p-3" style={{gridColumn: "span 2"}}>
+                <div className="flex flex-col gap-5.5 p-3" >
                     <button onClick={() => handleUpdate()} className="w-75 inline-flex items-center justify-center gap-2.5 rounded-full bg-meta-3 py-4 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10" style={{margin: "auto"}}>{ isUpdate ? "تحديث" : "تعديل" }</button>
+                </div>
+                <div className="flex flex-col gap-5.5 p-3" >
+                    <button onClick={() => handleBack()} className="w-75 inline-flex items-center justify-center gap-2.5 rounded-full bg-meta-3 py-4 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10" style={{margin: "auto",backgroundColor:"#1C2434"}}>رجوع</button>
                 </div>
             </div>
             <ToastContainer />

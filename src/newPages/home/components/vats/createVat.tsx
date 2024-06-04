@@ -5,7 +5,9 @@ import 'react-toastify/dist/ReactToastify.css';
 import { validateVat } from "./vatRequest";
 
 interface formProps {
-createMethod: (vat: VatType) => void;
+createMethod: (vat: VatType) => void,
+Back:()=>void
+
 }
 
 const showErrorMessage = (msg:string) => {
@@ -14,7 +16,7 @@ position: toast.POSITION.TOP_RIGHT,
 });
 };
 
-const VatForm: React.FC<formProps> = ({createMethod}) => {
+const VatForm: React.FC<formProps> = ({createMethod,Back}) => {
 const [vat, setVat] = useState<VatType>({
 status: "",
 vatNumber: "",
@@ -26,7 +28,9 @@ expiryDate: "",
 const inputBindHandler = (key: keyof VatType) => (e: React.ChangeEvent<HTMLInputElement>) => {
 setVat({ ...vat, [key]: e.target.value });
 };
-
+const handleBack= ()=>{
+    Back();
+}
 const handleValidateNCreate = () => {
 let error = validateVat(vat)
 if (error) {
@@ -95,11 +99,16 @@ return (
                     value={vat.expiryDate} onChange={inputBindHandler('expiryDate')} />
             </div>
         </div>
-        <div className="flex flex-col gap-5.5 p-3" style={{gridColumn: "span 2" }}>
+        <br/>
+
+        <div className="flex flex-col gap-5.5 p-3" >
             <button onClick={()=> handleValidateNCreate()} className="w-75 inline-flex items-center
                 justify-center gap-2.5 rounded-full bg-meta-3 py-4 px-10 text-center font-medium text-white
                 hover:bg-opacity-90 lg:px-8 xl:px-10" style={{margin: "auto"}}>اضافة </button>
         </div>
+        <div className="flex flex-col gap-5.5 p-3" >
+                    <button onClick={() => handleBack()} className="w-75 inline-flex items-center justify-center gap-2.5 rounded-full bg-meta-3 py-4 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10" style={{margin: "auto",backgroundColor:"#1C2434"}}>رجوع</button>
+                </div>
     </div>
     <ToastContainer />
 </div>

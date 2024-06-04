@@ -8,7 +8,8 @@ import { formatDate } from "../../../../services/globalMethods";
 
 interface formProps {
     updateMethod: (branch: BranchRow) => boolean,
-    branch_prop: BranchRow
+    branch_prop: BranchRow,
+    Back:()=>void
 }
 
 const showErrorMessage = (msg:string) => {
@@ -24,7 +25,7 @@ const showSuccessMsg = (msg:string) => {
   
 
 
-const BranchDetails: React.FC<formProps> = ({updateMethod, branch_prop}) => {
+const BranchDetails: React.FC<formProps> = ({updateMethod, branch_prop,Back}) => {
     const [branch, setBranch] = useState<BranchRow>(branch_prop);
     const [isUpdate, setIsUpdate] = React.useState<boolean>(false)
 
@@ -35,7 +36,9 @@ const BranchDetails: React.FC<formProps> = ({updateMethod, branch_prop}) => {
     const handleChangeIsMain = (event: React.ChangeEvent<HTMLInputElement>) => {
         setBranch({...branch, ["isMain"]: event.target.checked});
       };
-    
+    const handleBack= ()=>{
+        Back();
+    }
     const handleUpdate = () => {
         
         if (isUpdate) {
@@ -155,8 +158,11 @@ const BranchDetails: React.FC<formProps> = ({updateMethod, branch_prop}) => {
                         </div>
                     </div>
                 </div>
-                <div className="flex flex-col gap-5.5 p-3" style={{gridColumn: "span 2"}}>
+                <div className="flex flex-col gap-5.5 p-3" >
                     <button onClick={() => handleUpdate()} className="w-75 inline-flex items-center justify-center gap-2.5 rounded-full bg-meta-3 py-4 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10" style={{margin: "auto"}}>{ isUpdate ? "تحديث" : "تعديل" }</button>
+                </div>
+                <div className="flex flex-col gap-5.5 p-3" >
+                    <button onClick={() => handleBack()} className="w-75 inline-flex items-center justify-center gap-2.5 rounded-full bg-meta-3 py-4 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10" style={{margin: "auto",backgroundColor:"#1C2434"}}>رجوع</button>
                 </div>
             </div>
             <ToastContainer />

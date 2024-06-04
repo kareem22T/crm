@@ -26,6 +26,7 @@ import TaxExaminationForm from "../taxExamination/createTaxExamination";
 import { ContractRow, ContractType, createContract, deleteContract, getContracts } from "../../../../services/contractServices";
 import ContractList from "../contract/contractsTable";
 import ContractForm from "../contract/createContract";
+import AuthorizationForm from "../Authorization/createAuthorization";
 
 interface formProps {
     client_prop: clientRow,
@@ -52,6 +53,7 @@ const Client: React.FC<formProps> = ({client_prop, goBack}) => {
     const [showBranchForm, setShowBranchForm] = React.useState<boolean>(false)
     const [showSocialInsuranceForm, setShowSocialInsurance] = React.useState<boolean>(false)
     const [showGeneralTaxForm, setShowGeneralTaxForm] = React.useState<boolean>(false)
+    const [showAuthorizationsForm, setShowAuthorizationsForm] = React.useState<boolean>(false)
     const [showVatForm, setShowVatForm] = React.useState<boolean>(false)
     const [showPartner, setShowPartner] = React.useState<boolean>(false)
     const [showTaxExamination, setShowTaxExamination] = React.useState<boolean>(false)
@@ -81,6 +83,8 @@ const Client: React.FC<formProps> = ({client_prop, goBack}) => {
             setShowTaxExamination(false)
       if (slectedTabE = 8) 
             setShowContractsForm(false)
+      if (slectedTabE = 9) 
+        setShowAuthorizationsForm(false)
     };
 
     const handleClickUpdateBtn = () => {
@@ -103,7 +107,7 @@ const Client: React.FC<formProps> = ({client_prop, goBack}) => {
                     getBranches(10, 1, client.id).then(data => {
                         setBranches(data.data.data)
                         setShowBranchForm(false)
-                        showSuccessMsg("تم اضافة الفرع بنجاح")
+                        showSuccessMsg("تم الاضافة الفرع بنجاح")
                 }).catch(error => {
                     console.error(error);
                 });
@@ -132,7 +136,7 @@ const Client: React.FC<formProps> = ({client_prop, goBack}) => {
                         getVats(10, 1, client.id).then(data => {
                             setVats(data.data.data)
                             setShowVatForm(false)
-                            showSuccessMsg("تم اضافة بنجاح")
+                            showSuccessMsg("تم الاضافة بنجاح")
                     }).catch(error => {
                         console.error(error);
                     });
@@ -173,8 +177,8 @@ const Client: React.FC<formProps> = ({client_prop, goBack}) => {
     const handleCreateGeneralTax = (generalTax: GeneralTaxType) => {
         createGeneralTax(generalTax, client.id).then(res => {
                 if (res.data.isSuccess == true) {
+                    showSuccessMsg("تم الاضافة بنجاح")
                     getGeneralTaxs(10, 1, client.id).then(data => {
-    
                         setGeneralTaxes(data.data.data)
                 
                     }).catch(error => {
@@ -202,6 +206,7 @@ const Client: React.FC<formProps> = ({client_prop, goBack}) => {
     const handleCreateSocialInsurance = (socialInsurance: SocialInsuranceType) => {
         createSocialInsurance(socialInsurance, client.id).then(res => {
                 if (res.data.isSuccess == true) {
+                    showSuccessMsg("تم الاضافة بنجاح")
                     getSocialInsurances(10, 1, client.id).then(data => {
     
                         setSocialInsurances(data.data.data)
@@ -231,6 +236,7 @@ const Client: React.FC<formProps> = ({client_prop, goBack}) => {
     const handleCreatePartner = (partner: PartnerType) => {
         createPartner(partner, client.id).then(res => {
                 if (res.data.isSuccess == true) {
+                    showSuccessMsg("تم الاضافة بنجاح")
                     getPartners(10, 1, client.id).then(data => {
     
                         setPartners(data.data.data)
@@ -261,6 +267,7 @@ const Client: React.FC<formProps> = ({client_prop, goBack}) => {
     const handleCreateTaxExamination = (taxExamination: TaxExaminationType) => {
         createTaxExamination(taxExamination, client.id).then(res => {
             if (res.data.isSuccess == true) {
+                showSuccessMsg("تم الاضافة بنجاح")
                 getTaxExaminations(10, 1, client.id).then(data => {
 
                     setTaxExaminations(data.data.data)
@@ -289,9 +296,12 @@ const Client: React.FC<formProps> = ({client_prop, goBack}) => {
         })
     }
 
+  
+
     const handleCreateContract = (contract: ContractType) => {
         createContract(contract, client.id).then(res => {
             if (res.data.isSuccess == true) {
+                showSuccessMsg("تم الاضافة بنجاح")
                 getContracts(10, 1, client.id)
                 .then(data => {
                     setContracts(data.data.data)
@@ -443,6 +453,11 @@ const Client: React.FC<formProps> = ({client_prop, goBack}) => {
                         onChange={handleToggleTabs}
                         aria-label="Platform"
                         >
+                              <ToggleButton value={9}>
+                            <span className="text-black dark:text-white">
+                            التوكيلات
+                            </span>
+                        </ToggleButton>
                         <ToggleButton value={8}>
                             <span className="text-black dark:text-white">
                                 عقود التاسيس
@@ -742,7 +757,7 @@ const Client: React.FC<formProps> = ({client_prop, goBack}) => {
                                     <BranchesList branchs={brnaches} client_id={client.id} goToAdd={() => setShowBranchForm(true)} deleteBranch={handleDeleteBranch}/>
                                 </>
                             ) : (
-                                <BranchForm createMethod={handleCreateBranch}/>
+                                <BranchForm Back={()=> setShowBranchForm(false)} createMethod={handleCreateBranch}/>
                             )
                         )
                     )
@@ -755,7 +770,7 @@ const Client: React.FC<formProps> = ({client_prop, goBack}) => {
                                     <VatList vats={vats} client_id={client.id} deleteVat={handleDeleteVat} goToAdd={() => setShowVatForm(true)}/>
                                 </>
                             ) : (
-                                <VatForm createMethod={handleCreateVat}/>
+                                <VatForm Back={() => setShowVatForm(false)} createMethod={handleCreateVat}/>
                             )
                         )
                     )
@@ -768,7 +783,7 @@ const Client: React.FC<formProps> = ({client_prop, goBack}) => {
                                     <SocialInsuranceList socialInsurances={socialInsurances} client_id={client.id} deleteSocialInsurance={handleDeleteSocialInsurance} goToAdd={() => setShowSocialInsurance(true)}/>
                                 </>
                             ) : (
-                                <SocialInsuranceForm createMethod={handleCreateSocialInsurance}/>
+                                <SocialInsuranceForm Back={() => setShowSocialInsurance(false)} createMethod={handleCreateSocialInsurance}/>
                             )
                         )
                     )
@@ -781,7 +796,7 @@ const Client: React.FC<formProps> = ({client_prop, goBack}) => {
                                     <GeneralTaxList generalTaxs={generalTaxes} client_id={client.id} deleteGeneralTax={handleDeleteGeneralTax} goToAdd={() => setShowGeneralTaxForm(true)}/>
                                 </>
                             ) : (
-                                <GeneralTaxForm createMethod={handleCreateGeneralTax}/>
+                                <GeneralTaxForm Back={() => setShowGeneralTaxForm(false)} createMethod={handleCreateGeneralTax}/>
                             )
                         )
                     )
@@ -794,7 +809,7 @@ const Client: React.FC<formProps> = ({client_prop, goBack}) => {
                                     <PartnerList partners={partners} client_id={client.id} deletePartner={handleDeletePartner} goToAdd={() => setShowPartner(true)}/>
                                 </>
                             ) : (
-                                <PartnerForm createMethod={handleCreatePartner}/>
+                                <PartnerForm Back={() => setShowPartner(false)} createMethod={handleCreatePartner}/>
                             )
                         )
                     )
@@ -807,7 +822,7 @@ const Client: React.FC<formProps> = ({client_prop, goBack}) => {
                                     <TaxExaminationList taxExaminations={taxExaminations} client_id={client.id} deleteTaxExamination={handleDeleteTaxExamination} goToAdd={() => setShowTaxExamination(true)}/>
                                 </>
                             ) : (
-                                <TaxExaminationForm createMethod={handleCreateTaxExamination}/>
+                                <TaxExaminationForm Back={() => setShowTaxExamination(false)} createMethod={handleCreateTaxExamination}/>
                             )
                         )
                     )
@@ -820,11 +835,12 @@ const Client: React.FC<formProps> = ({client_prop, goBack}) => {
                                     <ContractList contracts={contracts} client_id={client.id} deleteContract={handleDeleteContract} goToAdd={() => setShowContractsForm(true)}/>
                                 </>
                             ) : (
-                                <ContractForm createMethod={handleCreateContract}/>
+                                <ContractForm Back={() => setShowContractsForm(false)} createMethod={handleCreateContract}/>
                             )
                         )
                     )
                 }
+                 
                 <ToastContainer />
             </div>
         </>

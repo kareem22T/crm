@@ -5,7 +5,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import { validateSocialInsurance } from "./socialInsuranceRequest";
 
 interface formProps {
-createMethod: (socialInsurance: SocialInsuranceType) => void;
+createMethod: (socialInsurance: SocialInsuranceType) => void,
+Back:()=>void
 }
 
 const showErrorMessage = (msg:string) => {
@@ -14,14 +15,16 @@ position: toast.POSITION.TOP_RIGHT,
 });
 };
 
-const SocialInsuranceForm: React.FC<formProps> = ({createMethod}) => {
+const SocialInsuranceForm: React.FC<formProps> = ({createMethod,Back}) => {
 const [socialInsurance, setSocialInsurance] = useState<SocialInsuranceType>({
     insuranceStatus: "",
     socialInsuranceNum: "",
     associatedInsurance: "",
     attached: ""
 });
-
+const handleBack= ()=>{
+    Back();
+}
 const inputBindHandler = (key: keyof SocialInsuranceType) => (e: React.ChangeEvent<HTMLInputElement>) => {
 setSocialInsurance({ ...socialInsurance, [key]: e.target.value });
 };
@@ -85,11 +88,14 @@ return (
         </div>
 
 
-        <div className="flex flex-col gap-5.5 p-3" style={{gridColumn: "span 2" }}>
+        <div className="flex flex-col gap-5.5 p-3" >
             <button onClick={()=> handleValidateNCreate()} className="w-75 inline-flex items-center
                 justify-center gap-2.5 rounded-full bg-meta-3 py-4 px-10 text-center font-medium text-white
                 hover:bg-opacity-90 lg:px-8 xl:px-10" style={{margin: "auto"}}>اضافة </button>
         </div>
+        <div className="flex flex-col gap-5.5 p-3" >
+                    <button onClick={() => handleBack()} className="w-75 inline-flex items-center justify-center gap-2.5 rounded-full bg-meta-3 py-4 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10" style={{margin: "auto",backgroundColor:"#1C2434"}}>رجوع</button>
+                </div>
     </div>
     <ToastContainer />
 </div>

@@ -47,7 +47,9 @@ const BranchesList: React.FC<TableProps> = ({ branchs, goToAdd, client_id, delet
       deleteBranch(id)
       handleClose()
     }
-  
+  const HandleBackTable = ()=>{
+    setShowBranchDetails(!showBranchDetails);
+  }
     const handleClickUpdateBtn = (branch: BranchRow) : boolean => {
         if (currentBranch) {
           updateBranch(branch, client_id).then(res => {
@@ -155,7 +157,7 @@ const BranchesList: React.FC<TableProps> = ({ branchs, goToAdd, client_id, delet
           ) :
           (
             currentBranch && (
-              <BranchDetails branch_prop={currentBranch} updateMethod={handleClickUpdateBtn} />
+              <BranchDetails branch_prop={currentBranch} updateMethod={handleClickUpdateBtn} Back={HandleBackTable} />
             )
           )
         }

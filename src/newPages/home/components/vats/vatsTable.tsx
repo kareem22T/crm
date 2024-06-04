@@ -37,7 +37,9 @@ const VatList: React.FC<TableProps> = ({ vats, client_id, deleteVat, goToAdd }) 
     setVatDelete(vat)
     handleOpen()
   }
-
+  const HandleBackTable = ()=>{
+    setShowVatDetails(!showVatDetails);
+  }
   const showVat = (vat: VatRow) => {
     setCurrentVat(vat)
     setShowVatDetails(true)
@@ -147,7 +149,7 @@ const VatList: React.FC<TableProps> = ({ vats, client_id, deleteVat, goToAdd }) 
           ) :
           (
             currentVat && (
-              <VatDetails vat_prop={currentVat} updateMethod={handleClickUpdateBtn} />
+              <VatDetails Back={HandleBackTable} vat_prop={currentVat} updateMethod={handleClickUpdateBtn} />
             )
           )
         }

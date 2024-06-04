@@ -32,7 +32,9 @@ const ContractList: React.FC<TableProps> = ({ contracts, client_id, deleteContra
   const handleClose = () => setOpen(false);
 
   const [contractDletet, setContractDelete] = React.useState<ContractRow>()
-
+  const HandleBackTable = ()=>{
+    setShowContractDetails(!showContractDetails);
+  }
   const showConfirmDelete = (contract: ContractRow) => {
     setContractDelete(contract)
     handleOpen()
@@ -151,7 +153,7 @@ const ContractList: React.FC<TableProps> = ({ contracts, client_id, deleteContra
           ) :
           (
             currentContract && (
-              <ContractDetails contract_prop={currentContract} updateMethod={handleClickUpdateBtn} />
+              <ContractDetails Back={HandleBackTable} contract_prop={currentContract} updateMethod={handleClickUpdateBtn} />
             )
           )
         }

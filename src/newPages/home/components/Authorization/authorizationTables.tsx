@@ -1,14 +1,14 @@
 import React from 'react';
-import { GeneralTaxRow, updateGeneralTax } from '../../../../services/generalTaxServices';
+import { AuthorizationRow, updateAuthorization } from '../../../../services/AuthorizationServices';
 import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
-import GeneralTaxDetails from "./generalTaxDetails"
+import AuthorizationDetails from "./authorizationDetails"
 import { formateDateInArabic } from '../../../../services/globalMethods';
 
 interface TableProps {
-    generalTaxs: GeneralTaxRow[],
+    Authorizations: AuthorizationRow[],
     client_id: number,
-    deleteGeneralTax: (id: number) => void,
+    deleteAuthorization: (id: number) => void,
     goToAdd: () => void,
   }
   
@@ -25,37 +25,37 @@ interface TableProps {
   };
   
   
-const GeneralTaxList: React.FC<TableProps> = ({ generalTaxs, client_id, deleteGeneralTax, goToAdd }) => {  
-  const [showGeneralTaxDetails, setShowGeneralTaxDetails] = React.useState<boolean>(false)
-  const [currentGeneralTax, setCurrentGeneralTax] = React.useState<GeneralTaxRow>()
+const AuthorizationList: React.FC<TableProps> = ({ Authorizations, client_id, deleteAuthorization, goToAdd }) => {  
+  const [showAuthorizationDetails, setShowAuthorizationDetails] = React.useState<boolean>(false)
+  const [currentAuthorization, setCurrentAuthorization] = React.useState<AuthorizationRow>()
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  const [generalTaxDletet, setGeneralTaxDelete] = React.useState<GeneralTaxRow>()
+  const [AuthorizationDletet, setAuthorizationDelete] = React.useState<AuthorizationRow>()
 
   const HandleBackTable = ()=>{
-    setShowGeneralTaxDetails(!showGeneralTaxDetails);
+    setShowAuthorizationDetails(!showAuthorizationDetails);
   }
   
-  const showConfirmDelete = (generalTax: GeneralTaxRow) => {
-    setGeneralTaxDelete(generalTax)
+  const showConfirmDelete = (Authorization: AuthorizationRow) => {
+    setAuthorizationDelete(Authorization)
     handleOpen()
   }
 
-  const showGeneralTax = (generalTax: GeneralTaxRow) => {
-    setCurrentGeneralTax(generalTax)
-    setShowGeneralTaxDetails(true)
+  const showAuthorization = (Authorization: AuthorizationRow) => {
+    setCurrentAuthorization(Authorization)
+    setShowAuthorizationDetails(true)
   }
 
   const handleDelete = (id: number) => {
-    deleteGeneralTax(id)
+    deleteAuthorization(id)
     handleClose()
   }
 
-  const handleClickUpdateBtn = (generalTax: GeneralTaxRow) : boolean => {
-      if (currentGeneralTax) {
-        updateGeneralTax(generalTax, client_id).then(res => {
+  const handleClickUpdateBtn = (Authorization: AuthorizationRow) : boolean => {
+      if (currentAuthorization) {
+        updateAuthorization(Authorization, client_id).then(res => {
           if (res.data.isSuccess == true) {
             return true
           } else {
@@ -69,7 +69,7 @@ const GeneralTaxList: React.FC<TableProps> = ({ generalTaxs, client_id, deleteGe
     return (
       <>
         {
-          generalTaxDletet && (
+          AuthorizationDletet && (
             <Modal
               open={open}
               onClose={handleClose}
@@ -78,15 +78,15 @@ const GeneralTaxList: React.FC<TableProps> = ({ generalTaxs, client_id, deleteGe
             >
               <Box sx={style}>
                 <h1 className='text-center ' style={{fontSize: 20, fontWeight: 600}}>
-                  هل انت متاكد من هذف  
+                  هل انت متاكد من حذف  
                   <br />
-                  ({generalTaxDletet.jurisdiction})
+                  ({AuthorizationDletet.authorizationNum})
                 </h1>
                 <div className="btns flex gap-3 mt-8 justify-center">
                     <button onClick={handleClose} className='inline-flex items-center justify-center gap-2.5 rounded-full bg-black py-4 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10'>
                       الغاء
                     </button>
-                    <button onClick={() => handleDelete(generalTaxDletet.id)} className='inline-flex items-center justify-center gap-2.5 rounded-full py-4 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10' style={{background: "#fb5454"}}>
+                    <button onClick={() => handleDelete(AuthorizationDletet.id)} className='inline-flex items-center justify-center gap-2.5 rounded-full py-4 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10' style={{background: "#fb5454"}}>
                       حذف
                     </button>
                 </div>
@@ -95,53 +95,46 @@ const GeneralTaxList: React.FC<TableProps> = ({ generalTaxs, client_id, deleteGe
           )
         }
         {
-          !showGeneralTaxDetails ? (
+          !showAuthorizationDetails ? (
             <>
                 <div className="rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
                   <div className="max-w-full overflow-x-auto">
                     <table className="w-full table-auto">
                       <thead>
                         <tr className="bg-gray-2 text-right dark:bg-meta-4" style={{whiteSpace: "nowrap"}}>
-                            <th className="border-b border-[#eee] py-5 px-4 font-medium text-black dark:text-white">المأموريه التابع لها</th>
-                            <th className="border-b border-[#eee] py-5 px-4 font-medium text-black dark:text-white">تاريخ بدء النشاط </th>
-                            <th className="border-b border-[#eee] py-5 px-4 font-medium text-black dark:text-white">تاريخ البطاقه الضريبيه </th>
-                            <th className="border-b border-[#eee] py-5 px-4 font-medium text-black dark:text-white">تاريخ أنتهاء البطاقه الضريبيه </th>
-                            <th className="border-b border-[#eee] py-5 px-4 font-medium text-black dark:text-white">الخضوع للدفعات المقدمة </th>
-                            <th className="border-b border-[#eee] py-5 px-4 font-medium text-black dark:text-white">فترة الخضوع للدفعات المقدمة</th>
+                            <th className="border-b border-[#eee] py-5 px-4 font-medium text-black dark:text-white">رقم التوكيل</th>
+                            <th className="border-b border-[#eee] py-5 px-4 font-medium text-black dark:text-white">تاريخ التوكيل</th>
+                            <th className="border-b border-[#eee] py-5 px-4 font-medium text-black dark:text-white">الموكل</th>
+                            <th className="border-b border-[#eee] py-5 px-4 font-medium text-black dark:text-white">بالصفة</th>
                             <th className="border-b border-[#eee] py-5 px-4 font-medium text-black dark:text-white">التحكم</th>
                         </tr>
                       </thead>
                       <tbody>
-                        {generalTaxs.map((generalTax:GeneralTaxRow) => (
-                            <tr key={generalTax.id}>
+                        {Authorizations.map((Authorization:AuthorizationRow) => (
+                            <tr key={Authorization.id}>
                                 <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
-                                    <p className="text-black dark:text-white">{generalTax.jurisdiction}</p>
+                                    <p className="text-black dark:text-white">{Authorization.authorizationNum}</p>
                                 </td>
                                 <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
-                                    <p className="text-black dark:text-white">{formateDateInArabic(generalTax.activityStartDate)}</p>
+                                    <p className="text-black dark:text-white">{formateDateInArabic(Authorization.dateAuthorization)}</p>
                                 </td>
                                 <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
-                                    <p className="text-black dark:text-white">{formateDateInArabic(generalTax.taxCardIssueDate)}</p>
+                                    <p className="text-black dark:text-white">{formateDateInArabic(Authorization.principal)}</p>
                                 </td>
                                 <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
-                                    <p className="text-black dark:text-white">{formateDateInArabic(generalTax.taxCardExpiryDate)}</p>
+                                    <p className="text-black dark:text-white">{formateDateInArabic(Authorization.principalType)}</p>
                                 </td>
-                                <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
-                                    <p className="text-black dark:text-white">{generalTax.subjectAdvancePayments}</p>
-                                </td>
-                                <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
-                                    <p className="text-black dark:text-white">{formateDateInArabic(generalTax.periodSubjectAdvancePayments)}</p>
-                                </td>
+                
                                 <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
                                   <div className='flex'>
-                                    <button onClick={() => showGeneralTax(generalTax)} className="inline-flex bg-blck items-center justify-center gap-2.5 rounded-full bg-meta-3 py-2 px-4 text-center font-medium text-white hover:bg-opacity-90 lg:px-4 xl:px-4">
+                                    <button onClick={() => showAuthorization(Authorization)} className="inline-flex bg-blck items-center justify-center gap-2.5 rounded-full bg-meta-3 py-2 px-4 text-center font-medium text-white hover:bg-opacity-90 lg:px-4 xl:px-4">
                                       <svg xmlns="http://www.w3.org/2000/svg" className="icon icon-tabler icon-tabler-eye" width="20" height="20" viewBox="0 0 24 24" strokeWidth="1.5" stroke="#fff" fill="none" strokeLinecap="round" strokeLinejoin="round">
                                         <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
                                         <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
                                         <path d="M21 12c-2.4 4 -5.4 6 -9 6c-3.6 0 -6.6 -2 -9 -6c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6" />
                                       </svg>
                                     </button>
-                                    <button onClick={() => showConfirmDelete(generalTax)}  style={{background: "#fb5454"}} className="inline-flex items-center justify-center rounded-full bg-black py-2 px-4 text-center font-medium text-white hover:bg-opacity-90 lg:px-4 xl:px-4 mr-2">
+                                    <button onClick={() => showConfirmDelete(Authorization)}  style={{background: "#fb5454"}} className="inline-flex items-center justify-center rounded-full bg-black py-2 px-4 text-center font-medium text-white hover:bg-opacity-90 lg:px-4 xl:px-4 mr-2">
                                       <svg xmlns="http://www.w3.org/2000/svg" className="icon icon-tabler icon-tabler-trash" width="20" height="20" viewBox="0 0 24 24" stroke-width="1.5" stroke="#fff" fill="none" stroke-linecap="round" stroke-linejoin="round">
                                         <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
                                         <path d="M4 7l16 0" />
@@ -165,8 +158,8 @@ const GeneralTaxList: React.FC<TableProps> = ({ generalTaxs, client_id, deleteGe
               </>     
           ) :
           (
-            currentGeneralTax && (
-              <GeneralTaxDetails Back={HandleBackTable} generalTax_prop={currentGeneralTax} updateMethod={handleClickUpdateBtn} />
+            currentAuthorization && (
+              <AuthorizationDetails Back={HandleBackTable} authorization_prop={currentAuthorization} updateMethod={handleClickUpdateBtn} />
             )
           )
         }
@@ -174,4 +167,4 @@ const GeneralTaxList: React.FC<TableProps> = ({ generalTaxs, client_id, deleteGe
   );
 };
 
-export default GeneralTaxList;
+export default AuthorizationList;

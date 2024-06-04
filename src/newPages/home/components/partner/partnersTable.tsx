@@ -33,6 +33,9 @@ const PartnerList: React.FC<TableProps> = ({ partners, client_id, deletePartner,
 
   const [partnerDletet, setPartnerDelete] = React.useState<PartnerRow>()
 
+  const HandleBackTable = ()=>{
+    setShowPartnerDetails(!showPartnerDetails);
+  }
   const showConfirmDelete = (partner: PartnerRow) => {
     setPartnerDelete(partner)
     handleOpen()
@@ -151,7 +154,7 @@ const PartnerList: React.FC<TableProps> = ({ partners, client_id, deletePartner,
           ) :
           (
             currentPartner && (
-              <PartnerDetails partner_prop={currentPartner} updateMethod={handleClickUpdateBtn} />
+              <PartnerDetails Back={HandleBackTable} partner_prop={currentPartner} updateMethod={handleClickUpdateBtn} />
             )
           )
         }

@@ -33,6 +33,9 @@ const TaxExaminationList: React.FC<TableProps> = ({ taxExaminations, client_id, 
 
   const [taxExaminationDletet, setTaxExaminationDelete] = React.useState<TaxExaminationRow>()
 
+  const HandleBackTable = ()=>{
+    setShowTaxExaminationDetails(!showTaxExaminationDetails);
+  }
   const showConfirmDelete = (taxExamination: TaxExaminationRow) => {
     setTaxExaminationDelete(taxExamination)
     handleOpen()
@@ -153,7 +156,7 @@ const TaxExaminationList: React.FC<TableProps> = ({ taxExaminations, client_id, 
           ) :
           (
             currentTaxExamination && (
-              <TaxExaminationDetails taxExamination_prop={currentTaxExamination} updateMethod={handleClickUpdateBtn} />
+              <TaxExaminationDetails Back={HandleBackTable} taxExamination_prop={currentTaxExamination} updateMethod={handleClickUpdateBtn} />
             )
           )
         }

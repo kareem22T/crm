@@ -33,6 +33,11 @@ const SocialInsuranceList: React.FC<TableProps> = ({ socialInsurances, client_id
 
   const [socialInsuranceDletet, setSocialInsuranceDelete] = React.useState<SocialInsuranceRow>()
 
+
+  const HandleBackTable = ()=>{
+    setShowSocialInsuranceDetails(!showSocialInsuranceDetails);
+  }
+
   const showConfirmDelete = (socialInsurance: SocialInsuranceRow) => {
     setSocialInsuranceDelete(socialInsurance)
     handleOpen()
@@ -147,7 +152,7 @@ const SocialInsuranceList: React.FC<TableProps> = ({ socialInsurances, client_id
           ) :
           (
             currentSocialInsurance && (
-              <SocialInsuranceDetails socialInsurance_prop={currentSocialInsurance} updateMethod={handleClickUpdateBtn} />
+              <SocialInsuranceDetails Back={HandleBackTable} socialInsurance_prop={currentSocialInsurance} updateMethod={handleClickUpdateBtn} />
             )
           )
         }

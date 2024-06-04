@@ -8,7 +8,8 @@ import { formatDate } from "../../../../services/globalMethods";
 
 interface formProps {
     updateMethod: (vat: VatRow) => boolean,
-    vat_prop: VatRow
+    vat_prop: VatRow,
+    Back:()=>void
 }
 
 const showErrorMessage = (msg:string) => {
@@ -24,14 +25,16 @@ const showSuccessMsg = (msg:string) => {
   
 
 
-const VatDetails: React.FC<formProps> = ({updateMethod, vat_prop}) => {
+const VatDetails: React.FC<formProps> = ({updateMethod, vat_prop,Back}) => {
     const [vat, setVat] = useState<VatRow>(vat_prop);
     const [isUpdate, setIsUpdate] = React.useState<boolean>(false)
 
     const inputBindHandler = (key: keyof VatRow) => (e: React.ChangeEvent<HTMLInputElement>) => {
         setVat({ ...vat, [key]: e.target.value });    
     };
-    
+    const handleBack= ()=>{
+        Back();
+    }
     const handleUpdate = () => {
         
         if (isUpdate) {
@@ -117,8 +120,12 @@ const VatDetails: React.FC<formProps> = ({updateMethod, vat_prop}) => {
                             />
                     </div>
                 </div>
-                <div className="flex flex-col gap-5.5 p-3" style={{gridColumn: "span 2"}}>
+                <br/>
+                <div className="flex flex-col gap-5.5 p-3" >
                     <button onClick={() => handleUpdate()} className="w-75 inline-flex items-center justify-center gap-2.5 rounded-full bg-meta-3 py-4 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10" style={{margin: "auto"}}>{ isUpdate ? "تحديث" : "تعديل" }</button>
+                </div>
+                <div className="flex flex-col gap-5.5 p-3" >
+                    <button onClick={() => handleBack()} className="w-75 inline-flex items-center justify-center gap-2.5 rounded-full bg-meta-3 py-4 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10" style={{margin: "auto",backgroundColor:"#1C2434"}}>رجوع</button>
                 </div>
             </div>
             <ToastContainer />

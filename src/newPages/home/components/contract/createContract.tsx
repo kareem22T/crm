@@ -6,6 +6,7 @@ import { validateContract } from "./contractRequest";
 
 interface formProps {
 createMethod: (contract: ContractType) => void;
+Back:()=>void
 }
 
 const showErrorMessage = (msg:string) => {
@@ -14,7 +15,7 @@ position: toast.POSITION.TOP_RIGHT,
 });
 };
 
-const ContractForm: React.FC<formProps> = ({createMethod}) => {
+const ContractForm: React.FC<formProps> = ({createMethod,Back}) => {
 const [contract, setContract] = useState<ContractType>({
     establishmentNewspaper: "",
     editedNewspaper: "",
@@ -25,7 +26,9 @@ const [contract, setContract] = useState<ContractType>({
 const inputBindHandler = (key: keyof ContractType) => (e: React.ChangeEvent<HTMLInputElement>) => {
 setContract({ ...contract, [key]: e.target.value });
 };
-
+const handleBack= ()=>{
+    Back();
+}
 const handleValidateNCreate = () => {
     let error = validateContract(contract)
     if (error) {
@@ -88,11 +91,14 @@ return (
                             />
                     </div>
                 </div>
-        <div className="flex flex-col gap-5.5 p-3" style={{gridColumn: "span 2" }}>
+        <div className="flex flex-col gap-5.5 p-3" >
             <button onClick={()=> handleValidateNCreate()} className="w-75 inline-flex items-center
                 justify-center gap-2.5 rounded-full bg-meta-3 py-4 px-10 text-center font-medium text-white
                 hover:bg-opacity-90 lg:px-8 xl:px-10" style={{margin: "auto"}}>اضافة </button>
         </div>
+        <div className="flex flex-col gap-5.5 p-3" >
+                    <button onClick={() => handleBack()} className="w-75 inline-flex items-center justify-center gap-2.5 rounded-full bg-meta-3 py-4 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10" style={{margin: "auto",backgroundColor:"#1C2434"}}>رجوع</button>
+                </div>
     </div>
     <ToastContainer />
 </div>

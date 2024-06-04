@@ -5,7 +5,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import { validatePartner } from "./partnerRequest";
 
 interface formProps {
-createMethod: (partner: PartnerType) => void;
+createMethod: (partner: PartnerType) => void,
+Back:()=>void
 }
 
 const showErrorMessage = (msg:string) => {
@@ -14,18 +15,20 @@ position: toast.POSITION.TOP_RIGHT,
 });
 };
 
-const PartnerForm: React.FC<formProps> = ({createMethod}) => {
+const PartnerForm: React.FC<formProps> = ({createMethod,Back}) => {
 const [partner, setPartner] = useState<PartnerType>({
     name: "",
-    contributionRatio: "",
-    contributionValue: "",
+    contributionRatio: 0,
+    contributionValue: 0,
     nationalId: ""
 });
 
 const inputBindHandler = (key: keyof PartnerType) => (e: React.ChangeEvent<HTMLInputElement>) => {
 setPartner({ ...partner, [key]: e.target.value });
 };
-
+const handleBack= ()=>{
+    Back();
+}
 const handleValidateNCreate = () => {
 let error = validatePartner(partner)
 if (error) {
@@ -87,11 +90,14 @@ return (
                     value={partner.nationalId} onChange={inputBindHandler('nationalId')} />
             </div>
         </div>
-        <div className="flex flex-col gap-5.5 p-3" style={{gridColumn: "span 2" }}>
+        <div className="flex flex-col gap-5.5 p-3" >
             <button onClick={()=> handleValidateNCreate()} className="w-75 inline-flex items-center
                 justify-center gap-2.5 rounded-full bg-meta-3 py-4 px-10 text-center font-medium text-white
                 hover:bg-opacity-90 lg:px-8 xl:px-10" style={{margin: "auto"}}>اضافة </button>
         </div>
+        <div className="flex flex-col gap-5.5 p-3" >
+                    <button onClick={() => handleBack()} className="w-75 inline-flex items-center justify-center gap-2.5 rounded-full bg-meta-3 py-4 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10" style={{margin: "auto",backgroundColor:"#1C2434"}}>رجوع</button>
+                </div>
     </div>
     <ToastContainer />
 </div>
