@@ -31,7 +31,12 @@ let error = validatePartner(partner)
 if (error) {
 showErrorMessage(error)
 } else {
+    try{
 createMethod(partner)
+    }catch(ex:any){
+        console.log(ex.error)
+        showErrorMessage(ex)
+    }
 }
 }
 

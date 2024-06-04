@@ -18,7 +18,7 @@ export function getPartners(PageSize: number, PageNumber: number, clientId: numb
 
 // Create Partner
 export function createPartner(partner: PartnerType, clientId: number) {
-    return axios.post(`${API_URL}/api/Client/${clientId}/Partner`, partner);
+    return axios.post(`${API_URL}/api/Client/${clientId}/Partner`, partner)
 }
 
 // Update Partner
@@ -36,15 +36,15 @@ export function deletePartner(id:number, clientId: number) {
     // Create and update type
     export type PartnerType = {
         name: string,
-        contributionRatio: string,
-        contributionValue: string,
+        contributionRatio: number,
+        contributionValue: number,
         nationalId: string,
     }
 
     export interface PartnerRow {
         name: string,
-        contributionRatio: string,
-        contributionValue: string,
+        contributionRatio: number,
+        contributionValue: number,
         nationalId: string,
         id: number
     }

@@ -27,11 +27,11 @@ setContract({ ...contract, [key]: e.target.value });
 };
 
 const handleValidateNCreate = () => {
-let error = validateContract(contract)
-if (error) {
-showErrorMessage(error)
-} else {
-createMethod(contract)
+    let error = validateContract(contract)
+    if (error) {
+    showErrorMessage(error)
+    } else {
+    createMethod(contract)
 }
 }
 

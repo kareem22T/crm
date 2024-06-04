@@ -36,17 +36,17 @@ export function deleteTaxExamination(id:number, clientId: number) {
     // Create and update type
     export type TaxExaminationType = {
         status: string,
-        industrialProfits: string,
-        salaryTax: string,
-        stampDuty: string,
+        industrialProfits: number,
+        salaryTax: number,
+        stampDuty: number,
         year: string,
     }
 
     export interface TaxExaminationRow {
         status: string,
-        industrialProfits: string,
-        salaryTax: string,
-        stampDuty: string,
+        industrialProfits: number,
+        salaryTax: number,
+        stampDuty: number,
         year: string,
         id: number
     }

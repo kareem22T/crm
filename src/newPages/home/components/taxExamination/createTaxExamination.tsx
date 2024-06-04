@@ -17,10 +17,10 @@ position: toast.POSITION.TOP_RIGHT,
 const TaxExaminationForm: React.FC<formProps> = ({createMethod}) => {
 const [taxExamination, setTaxExamination] = useState<TaxExaminationType>({
     status: "",
-    industrialProfits: "",
-    salaryTax: "",
-    stampDuty: "",
-    year: ""
+    industrialProfits: 0,
+    salaryTax: 0,
+    stampDuty: 0,
+    year: ''
 });
 
 const inputBindHandler = (key: keyof TaxExaminationType) => (e: React.ChangeEvent<HTMLInputElement>) => {

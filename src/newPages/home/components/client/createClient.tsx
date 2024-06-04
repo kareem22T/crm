@@ -52,6 +52,8 @@ const ClientForm: React.FC<formProps> = ({createMethod}) => {
             <ToastContainer />
             {/* <!-- Input Fields --> */}
             <div className="p-5 grid grid-cols-1 gap-2 sm:grid-cols-2 rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
+               
+               
                 <div className="flex flex-col gap-5.5 p-3" >
                     <div>
                         <label className="mb-3 block text-black dark:text-white">
@@ -136,6 +138,9 @@ const ClientForm: React.FC<formProps> = ({createMethod}) => {
                         />
                     </div>
                 </div>
+                <br/>
+
+       
                 <div className="flex flex-col gap-5.5 p-3" >
                     <div>
                         <label className="mb-3 block text-black dark:text-white">
@@ -177,7 +182,7 @@ const ClientForm: React.FC<formProps> = ({createMethod}) => {
                             onChange={inputBindHandler('commercialRegisterNum')}
                         />
                     </div>
-                </div>
+                </div >
                 <div className="flex flex-col gap-5.5 p-3" >
                     <div>
                         <label className="mb-3 block text-black dark:text-white">
@@ -218,6 +223,8 @@ const ClientForm: React.FC<formProps> = ({createMethod}) => {
                         />
                     </div>
                 </div>
+               
+
                 <div className="flex flex-col gap-5.5 p-3" >
                     <div>
                         <label className="mb-3 block text-black dark:text-white">
