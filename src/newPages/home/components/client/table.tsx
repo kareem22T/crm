@@ -74,7 +74,7 @@ const Table: React.FC<TableProps> = ({ clients, showClient, deleteClient }) => {
         <table className="w-full table-auto">
           <thead>
             <tr className="bg-gray-2 text-right dark:bg-meta-4" style={{whiteSpace: "nowrap"}}>
-                <th className="border-b border-[#eee] py-5 px-4 font-medium text-black dark:text-white">كود الشركة</th>
+                <th className="border-b border-[#eee] py-5 px-4 font-medium text-black dark:text-white">كود العميل</th>
                 <th className="border-b border-[#eee] py-5 px-4 font-medium text-black dark:text-white">اسم الشركة</th>
                 <th className="border-b border-[#eee] py-5 px-4 font-medium text-black dark:text-white">الاسم التجاري</th>
                 <th className="border-b border-[#eee] py-5 px-4 font-medium text-black dark:text-white">النشاط</th>

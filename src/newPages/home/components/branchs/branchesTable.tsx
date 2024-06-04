@@ -99,7 +99,7 @@ const BranchesList: React.FC<TableProps> = ({ branchs, goToAdd, client_id, delet
                   <table className="w-full table-auto">
                     <thead>
                       <tr className="bg-gray-2 text-right dark:bg-meta-4" style={{whiteSpace: "nowrap"}}>
-                          <th className="border-b border-[#eee] py-5 px-4 font-medium text-black dark:text-white">عنوان الفروع</th>
+                          <th className="border-b border-[#eee] py-5 px-4 font-medium text-black dark:text-white">عنوان الفرع</th>
                           <th className="border-b border-[#eee] py-5 px-4 font-medium text-black dark:text-white">المدير المسئول</th>
                           <th className="border-b border-[#eee] py-5 px-4 font-medium text-black dark:text-white">رقم التليفون  للتواصل</th>
                           <th className="border-b border-[#eee] py-5 px-4 font-medium text-black dark:text-white">إيميل للتواصل</th>
