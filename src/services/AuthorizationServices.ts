@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { API_URL } from './_env';
+import { API_URL } from '../_env';
 import { MetaData } from '../types/metadata';
 
 // Get clients

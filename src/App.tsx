@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Route, Routes, useLocation } from 'react-router-dom';
+import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
 
 import Loader from './common/Loader';
 import PageTitle from './components/PageTitle';
@@ -14,6 +14,7 @@ import Settings from './pages/Settings';
 import Tables from './pages/Tables';
 import Alerts from './pages/UiElements/Alerts';
 import Buttons from './pages/UiElements/Buttons';
+import useAuth from './hooks/useAuth'; // Assuming useAuth returns an object with an isAuthentication property
 
 
 // New Pages
@@ -22,6 +23,7 @@ import Home from './newPages/home';
 function App() {
   const [loading, setLoading] = useState<boolean>(true);
   const { pathname } = useLocation();
+  const { isAuthentication } = useAuth();
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -39,10 +41,14 @@ function App() {
         <Route
           index
           element={
-            <>
-              <PageTitle title="CRM System for manage accountant companies" />
-              <Home />
-            </>
+            isAuthentication ? (
+              <>
+                <PageTitle title="CRM System for manage accountant companies" />
+                <Home />
+              </>
+            ) : (
+              <Navigate to="/login" replace /> // Use Navigate with replace for better behavior
+            )
           }
         />
         <Route
@@ -127,7 +133,7 @@ function App() {
           }
         />
         <Route
-          path="/auth/signin"
+          path="/login"
           element={
             <>
               <PageTitle title="Signin | TailAdmin - Tailwind CSS Admin Dashboard Template" />
@@ -136,7 +142,7 @@ function App() {
           }
         />
         <Route
-          path="/auth/signup"
+          path="/register"
           element={
             <>
               <PageTitle title="Signup | TailAdmin - Tailwind CSS Admin Dashboard Template" />
