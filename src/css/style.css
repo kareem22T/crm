@@ -251,5 +251,5 @@ span.flatpickr-weekday,
 }
 
 .css-bghv3y-MuiToggleButtonGroup-root .MuiToggleButtonGroup-lastButton, .css-bghv3y-MuiToggleButtonGroup-root .MuiToggleButtonGroup-middleButton {
-  min-width: 100px;
+  min-width: 250px;
 }

@@ -18,7 +18,7 @@ import useAuth from './hooks/useAuth'; // Assuming useAuth returns an object wit
 
 
 // New Pages
-import Home from './newPages/home';
+import Home from './pages/home';
 
 function App() {
   const [loading, setLoading] = useState<boolean>(true);
