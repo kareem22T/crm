@@ -44,30 +44,6 @@ const ContractDetails: React.FC = () => {
               <div className="flex flex-col gap-9">
             {/* <!-- Input Fields --> */}
             <div className="p-5 grid grid-cols-1 gap-2 sm:grid-cols-2 rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
-            <div className="flex flex-col gap-5.5 p-3">
-                    <div>
-                        <label className="mb-3 block text-black dark:text-white">
-                        عقد التأسيس
-                        </label>
-                        <input type="text" placeholder="عقد التأسيس"
-                            className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
-                            value={contract.establishmentNewspaper} onChange={inputBindHandler('establishmentNewspaper')} 
-                            disabled={!isUpdate || false}
-                            />
-                    </div>
-                </div>
-                <div className="flex flex-col gap-5.5 p-3">
-                    <div>
-                        <label className="mb-3 block text-black dark:text-white">
-                            صحيفه الشركات بالتأسيس
-                        </label>
-                        <input type="text" placeholder="صحيفه الشركات بالتأسيس"
-                            className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
-                            value={contract.editedNewspaper} onChange={inputBindHandler('editedNewspaper')} 
-                            disabled={!isUpdate || false}
-                            />
-                    </div>
-                </div>
                 <div className="flex flex-col gap-5.5 p-3">
                     <div>
                         <label className="mb-3 block text-black dark:text-white">
@@ -75,7 +51,7 @@ const ContractDetails: React.FC = () => {
                         </label>
                         <input type="text" placeholder="عقود  التعديل"
                             className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
-                            value={contract.establishmentAttach} onChange={inputBindHandler('establishmentAttach')} 
+                            value={contract.editedNewspaper} onChange={inputBindHandler('editedNewspaper')} 
                             disabled={!isUpdate || false}
                             />
                     </div>

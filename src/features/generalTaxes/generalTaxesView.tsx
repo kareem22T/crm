@@ -2,11 +2,12 @@ import * as React from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import GeneralTaxesList from './getGeneralTaxes';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import type { RootState } from '../../store'
 import CreateGeneralTax from './createGeneralTax';
 import 'react-toastify/dist/ReactToastify.css';
 import GeneralTaxDetails from './generalTaxDetails';
+import { setError, setSuccess } from './generalTaxSlice';
 
 export default function GeneralTaxesView() {
 
@@ -22,7 +23,8 @@ export default function GeneralTaxesView() {
     });
   };
   
-  
+  const dispatch = useDispatch();
+
   const formToShow = useSelector((state: RootState) => state.generalTaxes.formToShow);
   const generalTaxError = useSelector((state: RootState) => state.generalTaxes.error);
   const generalTaxSuccessMsg = useSelector((state: RootState) => state.generalTaxes.successMsg);
@@ -30,9 +32,11 @@ export default function GeneralTaxesView() {
   React.useEffect(() => {
     if (generalTaxError)
       showErrorMessage(generalTaxError);
+      dispatch(setSuccess('')); // Reset the success message state
 
     if (generalTaxSuccessMsg)
       showSuccessMsg(generalTaxSuccessMsg);
+      dispatch(setError("")); // Reset the error state
 
   }, [generalTaxError, generalTaxSuccessMsg])
   

@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
-import axios from 'axios';
+import {api} from '../../API';
 import { API_URL } from '../../_env';
 import { MetaData } from '../../types/metadata';
 
@@ -31,7 +31,7 @@ export const getTaxExaminations = createAsyncThunk<getTaxExaminationsResponse, {
     'taxExaminations/getTaxExaminations',
     async ({ PageSize, PageNumber, clientId }, { rejectWithValue }) => {
         try {
-            const response = await axios.get<getTaxExaminationsResponse>(`${API_URL}/api/Client/${clientId}/TaxExamination`, {
+            const response = await api.get<getTaxExaminationsResponse>(`${API_URL}/api/Client/${clientId}/TaxExamination`, {
                 params: { PageSize, PageNumber }
             });
             return response.data;
@@ -45,7 +45,7 @@ export const createTaxExamination = createAsyncThunk<void, { taxExamination: Tax
     'taxExaminations/createTaxExamination',
     async ({ taxExamination, clientId }, { dispatch, rejectWithValue }) => {
         try {
-            await axios.post(`${API_URL}/api/Client/${clientId}/TaxExamination`, taxExamination);
+            await api.post(`${API_URL}/api/Client/${clientId}/TaxExamination`, taxExamination);
             await dispatch(getTaxExaminations({ PageSize: 10, PageNumber: 1, clientId }));
         } catch (error) {
             return rejectWithValue(`Failed to create tax examination: ${error}`);
@@ -57,7 +57,7 @@ export const updateTaxExamination = createAsyncThunk<void, { taxExamination: Tax
     'taxExaminations/updateTaxExamination',
     async ({ taxExamination, clientId }, { dispatch, rejectWithValue }) => {
         try {
-            await axios.put(`${API_URL}/api/Client/${clientId}/TaxExamination`, taxExamination);
+            await api.put(`${API_URL}/api/Client/${clientId}/TaxExamination`, taxExamination);
             await dispatch(getTaxExaminations({ PageSize: 10, PageNumber: 1, clientId }));
         } catch (error) {
             return rejectWithValue(`Failed to update tax examination: ${error}`);
@@ -69,7 +69,7 @@ export const deleteTaxExamination = createAsyncThunk<void, { id: number, clientI
     'taxExaminations/deleteTaxExamination',
     async ({ id, clientId }, { dispatch, rejectWithValue }) => {
         try {
-            await axios.delete(`${API_URL}/api/Client/${clientId}/TaxExamination/${id}`);
+            await api.delete(`${API_URL}/api/Client/${clientId}/TaxExamination/${id}`);
             await dispatch(getTaxExaminations({ PageSize: 10, PageNumber: 1, clientId }));
         } catch (error) {
             return rejectWithValue(`Failed to delete tax examination: ${error}`);
@@ -111,15 +111,9 @@ const taxExaminationsSlice = createSlice({
         },
         setError: (state, action: PayloadAction<string>) => {
             state.error = action.payload;
-            setTimeout(() => {
-                state.error = null;
-            }, 200);
         },
         setSuccess: (state, action: PayloadAction<string>) => {
             state.successMsg = action.payload;
-            setTimeout(() => {
-                state.successMsg = '';
-            }, 200);
         },
     },
     extraReducers: (builder) => {
@@ -136,9 +130,7 @@ const taxExaminationsSlice = createSlice({
             .addCase(getTaxExaminations.rejected, (state) => {
                 state.loading = false;
                 state.error = "حدث خطا ما";
-                setTimeout(() => {
-                    state.error = null;
-                }, 200);
+
             })
             .addCase(createTaxExamination.pending, (state) => {
                 state.loading = true;
@@ -148,16 +140,12 @@ const taxExaminationsSlice = createSlice({
                 state.loading = false;
                 state.formToShow = 1;
                 state.successMsg = "تم اضافة الفحص الضريبي بنجاح";
-                setTimeout(() => {
-                    state.successMsg = '';
-                }, 200);
+
             })
             .addCase(createTaxExamination.rejected, (state) => {
                 state.loading = false;
                 state.error = "حدث خطا ما";
-                setTimeout(() => {
-                    state.error = null;
-                }, 200);
+
             })
             .addCase(updateTaxExamination.pending, (state) => {
                 state.loading = true;
@@ -166,16 +154,12 @@ const taxExaminationsSlice = createSlice({
             .addCase(updateTaxExamination.fulfilled, (state) => {
                 state.loading = false;
                 state.successMsg = "تم تعديل الفحص الضريبي بنجاح";
-                setTimeout(() => {
-                    state.successMsg = '';
-                }, 200);
+
             })
             .addCase(updateTaxExamination.rejected, (state) => {
                 state.loading = false;
                 state.error = "حدث خطا ما";
-                setTimeout(() => {
-                    state.error = null;
-                }, 200);
+
             })
             .addCase(deleteTaxExamination.pending, (state) => {
                 state.loading = true;
@@ -184,16 +168,10 @@ const taxExaminationsSlice = createSlice({
             .addCase(deleteTaxExamination.fulfilled, (state) => {
                 state.loading = false;
                 state.successMsg = "تم حذف الفحص الضريبي بنجاح";
-                setTimeout(() => {
-                    state.successMsg = '';
-                }, 200);
             })
             .addCase(deleteTaxExamination.rejected, (state) => {
                 state.loading = false;
                 state.error = "حدث خطا ما";
-                setTimeout(() => {
-                    state.error = null;
-                }, 200);
             });
     }
 });

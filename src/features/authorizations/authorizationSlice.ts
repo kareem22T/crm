@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
-import axios from 'axios';
+import {api} from '../../API';
 import { API_URL } from '../../_env';
 import { MetaData } from '../../types/metadata';
 
@@ -31,7 +31,7 @@ export const getAuthorizations = createAsyncThunk<AuthorizationsResponse, { Page
     'authorizations/getAuthorizations',
     async ({ PageSize, PageNumber, clientId }, { rejectWithValue }) => {
         try {
-            const response = await axios.get<AuthorizationsResponse>(`${API_URL}/api/Client/${clientId}/Authorization`, {
+            const response = await api.get<AuthorizationsResponse>(`${API_URL}/api/Client/${clientId}/Authorization`, {
                 params: { PageSize, PageNumber }
             });
             return response.data;
@@ -45,7 +45,7 @@ export const createAuthorization = createAsyncThunk<void, { authorization: Autho
     'authorizations/createAuthorization',
     async ({ authorization, clientId }, { dispatch, rejectWithValue }) => {
         try {
-            await axios.post(`${API_URL}/api/Client/${clientId}/Authorization`, authorization);
+            await api.post(`${API_URL}/api/Client/${clientId}/Authorization`, authorization);
             await dispatch(getAuthorizations({ PageSize: 10, PageNumber: 1, clientId }));
         } catch (error) {
             return rejectWithValue(`Failed to create authorization: ${error}`);
@@ -57,7 +57,7 @@ export const updateAuthorization = createAsyncThunk<void, { authorization: Autho
     'authorizations/updateAuthorization',
     async ({ authorization, clientId }, { dispatch, rejectWithValue }) => {
         try {
-            await axios.put(`${API_URL}/api/Client/${clientId}/Authorization`, authorization);
+            await api.put(`${API_URL}/api/Client/${clientId}/Authorization`, authorization);
             await dispatch(getAuthorizations({ PageSize: 10, PageNumber: 1, clientId }));
         } catch (error) {
             return rejectWithValue(`Failed to update authorization: ${error}`);
@@ -69,7 +69,7 @@ export const deleteAuthorization = createAsyncThunk<void, { id: number, clientId
     'authorizations/deleteAuthorization',
     async ({ id, clientId }, { dispatch, rejectWithValue }) => {
         try {
-            await axios.delete(`${API_URL}/api/Client/${clientId}/Authorization/${id}`);
+            await api.delete(`${API_URL}/api/Client/${clientId}/Authorization/${id}`);
             await dispatch(getAuthorizations({ PageSize: 10, PageNumber: 1, clientId }));
         } catch (error) {
             return rejectWithValue(`Failed to delete authorization: ${error}`);
@@ -115,15 +115,9 @@ const authorizationsSlice = createSlice({
         },
         setError: (state, action: PayloadAction<string>) => {
             state.error = action.payload;
-            setTimeout(() => {
-                state.error = null;
-            }, 200);
         },
         setSuccess: (state, action: PayloadAction<string>) => {
             state.successMsg = action.payload;
-            setTimeout(() => {
-                state.successMsg = '';
-            }, 200);
         },
         setPageSize: (state, action: PayloadAction<number>) => {
             state.pageSize = action.payload;
@@ -146,9 +140,6 @@ const authorizationsSlice = createSlice({
             .addCase(getAuthorizations.rejected, (state) => {
                 state.loading = false;
                 state.error = "حدث خطا ما";
-                setTimeout(() => {
-                    state.error = null;
-                }, 200);
             })
             .addCase(createAuthorization.pending, (state) => {
                 state.loading = true;
@@ -158,16 +149,10 @@ const authorizationsSlice = createSlice({
                 state.loading = false;
                 state.formToShow = 1;
                 state.successMsg = "تم اضافة التوكيل بنجاح";
-                setTimeout(() => {
-                    state.successMsg = '';
-                }, 200);
             })
             .addCase(createAuthorization.rejected, (state) => {
                 state.loading = false;
                 state.error = "حدث خطا ما";
-                setTimeout(() => {
-                    state.error = null;
-                }, 200);
             })
             .addCase(updateAuthorization.pending, (state) => {
                 state.loading = true;
@@ -176,16 +161,10 @@ const authorizationsSlice = createSlice({
             .addCase(updateAuthorization.fulfilled, (state) => {
                 state.loading = false;
                 state.successMsg = "تم تعديل التوكيل بنجاح";
-                setTimeout(() => {
-                    state.successMsg = '';
-                }, 200);
             })
             .addCase(updateAuthorization.rejected, (state) => {
                 state.loading = false;
                 state.error = "حدث خطا ما";
-                setTimeout(() => {
-                    state.error = null;
-                }, 200);
             })
             .addCase(deleteAuthorization.pending, (state) => {
                 state.loading = true;
@@ -194,16 +173,10 @@ const authorizationsSlice = createSlice({
             .addCase(deleteAuthorization.fulfilled, (state) => {
                 state.loading = false;
                 state.successMsg = "تم حذف التوكيل بنجاح";
-                setTimeout(() => {
-                    state.successMsg = '';
-                }, 200);
             })
             .addCase(deleteAuthorization.rejected, (state) => {
                 state.loading = false;
                 state.error = "حدث خطا ما";
-                setTimeout(() => {
-                    state.error = null;
-                }, 200);
             });
     }
 });

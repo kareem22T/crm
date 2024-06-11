@@ -3,7 +3,6 @@ import React, { useState } from 'react';
 import { validatePartner } from "./partnerRequest";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../store";
-
 const PartnerDetails: React.FC = () => {
     const dispatch = useDispatch<AppDispatch>();
 
@@ -29,7 +28,7 @@ const PartnerDetails: React.FC = () => {
             }    
         }
     }
-    
+  
     return (
         <div>
             <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
@@ -38,7 +37,7 @@ const PartnerDetails: React.FC = () => {
                 </h2>
 
                 <nav>
-                    <button className="inline-flex bg-primary items-center justify-center gap-2.5 rounded-full bg-meta-3 py-2 px-5 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-5" onClick={() => dispatch(setFormToShow(1))}>رجوع للقائمة</button>
+                    <button className="inline-flex bg-primary items-center justify-center gap-2.5 rounded-full bg-meta-3 py-2 px-5 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-5" onClick={() => dispatch(setFormToShow(2))}>رجوع للقائمة</button>
                 </nav>
               </div>
               <div className="flex flex-col gap-9">

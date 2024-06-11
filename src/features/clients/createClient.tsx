@@ -21,10 +21,11 @@ const CreateClient: React.FC = () => {
         releaseDate: "",
         dateLastRenewal: "",
         dateLastRecord: "",
-        investedCapital: "",
         licensed: "",
         source: "",
-        paid: ""
+        paid: "",
+        establishmentNewspaper: "",
+        establishmentAttach: ""
       });
     
     const inputBindHandler = (key: keyof ClientType) => (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -226,20 +227,6 @@ const CreateClient: React.FC = () => {
                 <div className="flex flex-col gap-5.5 p-3" >
                     <div>
                         <label className="mb-3 block text-black dark:text-white">
-                            رأس المال 
-                        </label>
-                        <input
-                            type="text"
-                            placeholder="رأس المال"
-                            className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
-                            value={client.investedCapital}
-                            onChange={inputBindHandler('investedCapital')}
-                        />
-                    </div>
-                </div>
-                <div className="flex flex-col gap-5.5 p-3" >
-                    <div>
-                        <label className="mb-3 block text-black dark:text-white">
                             مرخص به 
                         </label>
                         <input
@@ -277,6 +264,29 @@ const CreateClient: React.FC = () => {
                             value={client.paid}
                             onChange={inputBindHandler('paid')}
                         />
+                    </div>
+                </div>
+                <div className="flex flex-col gap-5.5 p-3">
+                    <div>
+                        <label className="mb-3 block text-black dark:text-white">
+                        عقد التأسيس
+                        </label>
+                        <input type="text" placeholder="عقد التأسيس"
+                            className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                            value={client.establishmentAttach} onChange={inputBindHandler('establishmentAttach')} 
+                            />
+                    </div>
+                </div>
+                <div className="flex flex-col gap-5.5 p-3" style={{gridColumn: "span 2"}}>
+                    <div>
+                        <label className="mb-3 block text-black dark:text-white">
+                            صحيفه الشركات بالتأسيس
+                        </label>
+                        <input type="text" placeholder="صحيفه الشركات بالتأسيس"
+                            className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                            value={client.establishmentNewspaper} onChange={inputBindHandler('establishmentNewspaper')} 
+                            
+                            />
                     </div>
                 </div>
                 <div className="flex flex-col gap-5.5 p-3" style={{gridColumn: "span 2"}}>

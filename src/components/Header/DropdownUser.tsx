@@ -1,9 +1,10 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link, Navigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { clearCredentials } from './../../features/auth/authSlice';
 
 import UserOne from '../../images/user/user-01.png';
+import { RootState } from '../../store';
 
 const DropdownUser = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -34,6 +35,7 @@ const DropdownUser = () => {
     document.addEventListener('click', clickHandler);
     return () => document.removeEventListener('click', clickHandler);
   });
+  const name = useSelector((state: RootState) => state.auth.fullName);
 
   // close if the esc key is pressed
   useEffect(() => {
@@ -54,10 +56,10 @@ const DropdownUser = () => {
         to="#"
       >
         <span className="hidden text-right lg:block">
+          <span className="block text-xs"> مرحبا!</span>
           <span className="block text-sm font-medium text-black dark:text-white">
-            كريم محمد
+            {name}
           </span>
-          <span className="block text-xs">محاسب قانوني</span>
         </span>
 
         <span className="h-12 w-12 rounded-full">

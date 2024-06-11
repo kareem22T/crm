@@ -1,18 +1,19 @@
-// store.ts
 import { configureStore } from '@reduxjs/toolkit';
 import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import { combineReducers } from 'redux';
 import authReducer from './features/auth/authSlice';
-import clientsReducer from './features/clients/clientSlice'; // Correctly import
-import branchesReducer from './features/branchs/branchSlice'; // Correctly import
-import partnersReducer from './features/parteners/partnerSlice'; // Correctly import
-import contractReducer from './features/contracts/contractSlice'; // Correctly import
-import authorizationsReducer from './features/authorizations/authorizationSlice'; // Correctly import
-import socialInsurancesReducer from './features/socialInsurances/socialInsuranceSlice'; // Correctly import
-import generalTaxesReducer from './features/generalTaxes/generalTaxSlice'; // Correctly import
-import taxExaminationsReducer from './features/taxExaminations/taxExaminationSlice'; // Correctly import
-import vatsReducer from './features/vats/vatSlice'; // Correctly import
+import clientsReducer from './features/clients/clientSlice';
+import branchesReducer from './features/branchs/branchSlice';
+import partnersReducer from './features/parteners/partnerSlice';
+import contractReducer from './features/contracts/contractSlice';
+import authorizationsReducer from './features/authorizations/authorizationSlice';
+import socialInsurancesReducer from './features/socialInsurances/socialInsuranceSlice';
+import generalTaxesReducer from './features/generalTaxes/generalTaxSlice';
+import taxExaminationsReducer from './features/taxExaminations/taxExaminationSlice';
+import vatsReducer from './features/vats/vatSlice';
+import portalReducer from './features/portal/portalSlice';
+import invoiceReducer from './features/invoice/invoiceSlice';
 
 const rootReducer = combineReducers({
   auth: authReducer,
@@ -25,6 +26,8 @@ const rootReducer = combineReducers({
   generalTaxes: generalTaxesReducer, 
   taxExaminations: taxExaminationsReducer, 
   vats: vatsReducer, 
+  portal: portalReducer, 
+  invoice: invoiceReducer, 
 });
 
 const persistConfig = {
@@ -39,11 +42,12 @@ const store = configureStore({
   reducer: persistedReducer,
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
-      serializableCheck: false,
-    }),
+      serializableCheck: false
+    }).concat(),
 });
 
 export const persistor = persistStore(store);
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
+export { store }; // Ensure the store is exported correctly
 export default store;

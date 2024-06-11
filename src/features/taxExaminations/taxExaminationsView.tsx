@@ -2,11 +2,12 @@ import * as React from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import TaxExaminationsList from './getTaxExaminations';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import type { RootState } from '../../store'
 import CreateTaxExamination from './createTaxExamination';
 import 'react-toastify/dist/ReactToastify.css';
 import TaxExaminationDetails from './taxExaminationDetails';
+import { setError, setSuccess } from './taxExaminationSlice';
 
 export default function TaxExaminationsView() {
 
@@ -22,7 +23,7 @@ export default function TaxExaminationsView() {
     });
   };
   
-  
+  const dispatch = useDispatch();
   const formToShow = useSelector((state: RootState) => state.taxExaminations.formToShow);
   const taxExaminationError = useSelector((state: RootState) => state.taxExaminations.error);
   const taxExaminationSuccessMsg = useSelector((state: RootState) => state.taxExaminations.successMsg);
@@ -30,9 +31,10 @@ export default function TaxExaminationsView() {
   React.useEffect(() => {
     if (taxExaminationError)
       showErrorMessage(taxExaminationError);
-
+      dispatch(setError("")); // Reset the error state
     if (taxExaminationSuccessMsg)
       showSuccessMsg(taxExaminationSuccessMsg);
+      dispatch(setSuccess('')); // Reset the success message state
 
   }, [taxExaminationError, taxExaminationSuccessMsg])
   

@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
-import axios from 'axios';
+import {api} from '../../API';
 import { API_URL } from '../../_env';
 import { MetaData } from '../../types/metadata';
 
@@ -31,7 +31,7 @@ export const getVats = createAsyncThunk<getVatesResponse, { PageSize: number, Pa
     'vats/getVats',
     async ({ PageSize, PageNumber, clientId }, { rejectWithValue }) => {
         try {
-            const response = await axios.get<getVatesResponse>(`${API_URL}/api/Client/${clientId}/VAT`, {
+            const response = await api.get<getVatesResponse>(`${API_URL}/api/Client/${clientId}/VAT`, {
                 params: { PageSize, PageNumber }
             });
             return response.data;
@@ -45,7 +45,7 @@ export const createVat = createAsyncThunk<void, { vat: VatType, clientId: number
     'vats/createVat',
     async ({ vat, clientId }, { dispatch, rejectWithValue }) => {
         try {
-            await axios.post(`${API_URL}/api/Client/${clientId}/VAT`, vat);
+            await api.post(`${API_URL}/api/Client/${clientId}/VAT`, vat);
             await dispatch(getVats({ PageSize: 10, PageNumber: 1, clientId }));
         } catch (error) {
             return rejectWithValue(`Failed to create VAT: ${error}`);
@@ -57,7 +57,7 @@ export const updateVat = createAsyncThunk<void, { vat: VatRow, clientId: number 
     'vats/updateVat',
     async ({ vat, clientId }, { dispatch, rejectWithValue }) => {
         try {
-            await axios.put(`${API_URL}/api/Client/${clientId}/VAT`, vat);
+            await api.put(`${API_URL}/api/Client/${clientId}/VAT`, vat);
             await dispatch(getVats({ PageSize: 10, PageNumber: 1, clientId }));
         } catch (error) {
             return rejectWithValue(`Failed to update VAT: ${error}`);
@@ -69,7 +69,7 @@ export const deleteVat = createAsyncThunk<void, { id: number, clientId: number }
     'vats/deleteVat',
     async ({ id, clientId }, { dispatch, rejectWithValue }) => {
         try {
-            await axios.delete(`${API_URL}/api/Client/${clientId}/VAT/${id}`);
+            await api.delete(`${API_URL}/api/Client/${clientId}/VAT/${id}`);
             await dispatch(getVats({ PageSize: 10, PageNumber: 1, clientId }));
         } catch (error) {
             return rejectWithValue(`Failed to delete VAT: ${error}`);
@@ -111,15 +111,9 @@ const vatsSlice = createSlice({
         },
         setError: (state, action: PayloadAction<string>) => {
             state.error = action.payload;
-            setTimeout(() => {
-                state.error = null;
-            }, 200);
         },
         setSuccess: (state, action: PayloadAction<string>) => {
             state.successMsg = action.payload;
-            setTimeout(() => {
-                state.successMsg = '';
-            }, 200);
         },
     },
     extraReducers: (builder) => {
@@ -136,9 +130,7 @@ const vatsSlice = createSlice({
             .addCase(getVats.rejected, (state) => {
                 state.loading = false;
                 state.error = "حدث خطا ما";
-                setTimeout(() => {
-                    state.error = null;
-                }, 200);
+
             })
             .addCase(createVat.pending, (state) => {
                 state.loading = true;
@@ -148,16 +140,12 @@ const vatsSlice = createSlice({
                 state.loading = false;
                 state.formToShow = 1;
                 state.successMsg = "تم اضافة القيمة المضافة بنجاح";
-                setTimeout(() => {
-                    state.successMsg = '';
-                }, 200);
+
             })
             .addCase(createVat.rejected, (state) => {
                 state.loading = false;
                 state.error = "حدث خطا ما";
-                setTimeout(() => {
-                    state.error = null;
-                }, 200);
+
             })
             .addCase(updateVat.pending, (state) => {
                 state.loading = true;
@@ -166,16 +154,12 @@ const vatsSlice = createSlice({
             .addCase(updateVat.fulfilled, (state) => {
                 state.loading = false;
                 state.successMsg = "تم تعديل القيمة المضافة بنجاح";
-                setTimeout(() => {
-                    state.successMsg = '';
-                }, 200);
+
             })
             .addCase(updateVat.rejected, (state) => {
                 state.loading = false;
                 state.error = "حدث خطا ما";
-                setTimeout(() => {
-                    state.error = null;
-                }, 200);
+
             })
             .addCase(deleteVat.pending, (state) => {
                 state.loading = true;
@@ -184,16 +168,12 @@ const vatsSlice = createSlice({
             .addCase(deleteVat.fulfilled, (state) => {
                 state.loading = false;
                 state.successMsg = "تم حذف القيمة المضافة بنجاح";
-                setTimeout(() => {
-                    state.successMsg = '';
-                }, 200);
+
             })
             .addCase(deleteVat.rejected, (state) => {
                 state.loading = false;
                 state.error = "حدث خطا ما";
-                setTimeout(() => {
-                    state.error = null;
-                }, 200);
+
             });
     }
 });

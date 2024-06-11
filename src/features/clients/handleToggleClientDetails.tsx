@@ -2,7 +2,9 @@ import AuthorizationsView from "../authorizations/authorizationView";
 import BranchesView from "../branchs/branchesView";
 import ContractsView from "../contracts/contractsView";
 import GeneralTaxesView from "../generalTaxes/generalTaxesView";
+import InvoiceView from "../invoice/invoiceView";
 import PartnersView from "../parteners/partnersView";
+import PortalView from "../portal/portalView";
 import SocialInsurancesView from "../socialInsurances/socialInsurancesView";
 import TaxExaminationsView from "../taxExaminations/taxExaminationsView";
 import VatsView from "../vats/vatsView";
@@ -44,6 +46,15 @@ const InfoToShow: React.FC<formProps> = ({show}) => {
                         <VatsView />
                         <hr style={{height: 1, width: "100%", margin: "auto", display: "block", border: "none", background: "rgba(0, 0, 0, .1)"}}/>
                         <TaxExaminationsView />
+                    </>
+                )
+            }
+            {
+                show == DataToShow.PaymentInfo && (
+                    <>
+                        <PortalView />
+                        <hr style={{height: 1, width: "100%", margin: "auto", display: "block", border: "none", background: "rgba(0, 0, 0, .1)"}}/>
+                        <InvoiceView />
                     </>
                 )
             }

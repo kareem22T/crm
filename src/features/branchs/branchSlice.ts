@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
-import axios from 'axios';
+import {api} from '../../API';
 import { API_URL } from '../../_env';
 import { MetaData } from '../../types/metadata';
 
@@ -32,7 +32,7 @@ export const getBranches = createAsyncThunk<GetBranchesResponse, { PageSize: num
     'branches/getBranches',
     async ({ PageSize, PageNumber, clientId }, { rejectWithValue }) => {
         try {
-            const response = await axios.get<GetBranchesResponse>(`${API_URL}/api/Client/${clientId}/Branch`, {
+            const response = await api.get<GetBranchesResponse>(`${API_URL}/api/Client/${clientId}/Branch`, {
                 params: { PageSize, PageNumber }
             });
             return response.data;
@@ -46,7 +46,7 @@ export const createBranch = createAsyncThunk<void, { branch: BranchType, clientI
     'branches/createBranch',
     async ({ branch, clientId }, { dispatch, rejectWithValue }) => {
         try {
-            await axios.post(`${API_URL}/api/Client/${clientId}/Branch`, branch);
+            await api.post(`${API_URL}/api/Client/${clientId}/Branch`, branch);
             await dispatch(getBranches({ PageSize: 10, PageNumber: 1, clientId }));
         } catch (error) {
             return rejectWithValue(`Failed to create branch: ${error}`);
@@ -58,7 +58,7 @@ export const updateBranch = createAsyncThunk<void, { branch: BranchRow, clientId
     'branches/updateBranch',
     async ({ branch, clientId }, { dispatch, rejectWithValue }) => {
         try {
-            await axios.put(`${API_URL}/api/Client/${clientId}/Branch`, branch);
+            await api.put(`${API_URL}/api/Client/${clientId}/Branch`, branch);
             await dispatch(getBranches({ PageSize: 10, PageNumber: 1, clientId }));
         } catch (error) {
             return rejectWithValue(`Failed to update branch: ${error}`);
@@ -70,7 +70,7 @@ export const deleteBranch = createAsyncThunk<void, { id: number, clientId: numbe
     'branches/deleteBranch',
     async ({ id, clientId }, { dispatch, rejectWithValue }) => {
         try {
-            await axios.delete(`${API_URL}/api/Client/${clientId}/Branch/${id}`);
+            await api.delete(`${API_URL}/api/Client/${clientId}/Branch/${id}`);
             await dispatch(getBranches({ PageSize: 10, PageNumber: 1, clientId }));
         } catch (error) {
             return rejectWithValue(`Failed to delete branch: ${error}`);
@@ -147,9 +147,6 @@ const branchesSlice = createSlice({
             .addCase(getBranches.rejected, (state) => {
                 state.loading = false;
                 state.error = "حدث خطا ما";
-                setTimeout(() => {
-                    state.error = null;
-                }, 200);
             })
             .addCase(createBranch.pending, (state) => {
                 state.loading = true;
@@ -159,16 +156,10 @@ const branchesSlice = createSlice({
                 state.loading = false;
                 state.formToShow = 1;
                 state.successMsg = "تم اضافة الفرع بنجاح";
-                setTimeout(() => {
-                    state.successMsg = '';
-                }, 200);
             })
             .addCase(createBranch.rejected, (state) => {
                 state.loading = false;
                 state.error = "حدث خطا ما";
-                setTimeout(() => {
-                    state.error = null;
-                }, 200);
             })
             .addCase(updateBranch.pending, (state) => {
                 state.loading = true;
@@ -177,16 +168,10 @@ const branchesSlice = createSlice({
             .addCase(updateBranch.fulfilled, (state) => {
                 state.loading = false;
                 state.successMsg = "تم تعديل الفرع بنجاح";
-                setTimeout(() => {
-                    state.successMsg = '';
-                }, 200);
             })
             .addCase(updateBranch.rejected, (state) => {
                 state.loading = false;
                 state.error = "حدث خطا ما";
-                setTimeout(() => {
-                    state.error = null;
-                }, 200);
             })
             .addCase(deleteBranch.pending, (state) => {
                 state.loading = true;
@@ -195,16 +180,10 @@ const branchesSlice = createSlice({
             .addCase(deleteBranch.fulfilled, (state) => {
                 state.loading = false;
                 state.successMsg = "تم حذف الفرع بنجاح";
-                setTimeout(() => {
-                    state.successMsg = '';
-                }, 200);
             })
             .addCase(deleteBranch.rejected, (state) => {
                 state.loading = false;
                 state.error = "حدث خطا ما";
-                setTimeout(() => {
-                    state.error = null;
-                }, 200);
             });
     }
 });

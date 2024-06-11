@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
-import axios from 'axios';
+import {api} from '../../API';
 import { API_URL } from '../../_env';
 import { MetaData } from '../../types/metadata';
 
@@ -30,7 +30,7 @@ export const getSocialInsurances = createAsyncThunk<getSocialInsuranceesResponse
     'socialInsurances/getSocialInsurances',
     async ({ PageSize, PageNumber, clientId }, { rejectWithValue }) => {
         try {
-            const response = await axios.get<getSocialInsuranceesResponse>(`${API_URL}/api/Client/${clientId}/SocialInsurance`, {
+            const response = await api.get<getSocialInsuranceesResponse>(`${API_URL}/api/Client/${clientId}/SocialInsurance`, {
                 params: { PageSize, PageNumber }
             });
             return response.data;
@@ -44,7 +44,7 @@ export const createSocialInsurance = createAsyncThunk<void, { socialInsurance: S
     'socialInsurances/createSocialInsurance',
     async ({ socialInsurance, clientId }, { dispatch, rejectWithValue }) => {
         try {
-            await axios.post(`${API_URL}/api/Client/${clientId}/SocialInsurance`, socialInsurance);
+            await api.post(`${API_URL}/api/Client/${clientId}/SocialInsurance`, socialInsurance);
             await dispatch(getSocialInsurances({ PageSize: 10, PageNumber: 1, clientId }));
         } catch (error) {
             return rejectWithValue(`Failed to create social insurance: ${error}`);
@@ -56,7 +56,7 @@ export const updateSocialInsurance = createAsyncThunk<void, { socialInsurance: S
     'socialInsurances/updateSocialInsurance',
     async ({ socialInsurance, clientId }, { dispatch, rejectWithValue }) => {
         try {
-            await axios.put(`${API_URL}/api/Client/${clientId}/SocialInsurance`, socialInsurance);
+            await api.put(`${API_URL}/api/Client/${clientId}/SocialInsurance`, socialInsurance);
             await dispatch(getSocialInsurances({ PageSize: 10, PageNumber: 1, clientId }));
         } catch (error) {
             return rejectWithValue(`Failed to update social insurance: ${error}`);
@@ -68,7 +68,7 @@ export const deleteSocialInsurance = createAsyncThunk<void, { id: number, client
     'socialInsurances/deleteSocialInsurance',
     async ({ id, clientId }, { dispatch, rejectWithValue }) => {
         try {
-            await axios.delete(`${API_URL}/api/Client/${clientId}/SocialInsurance/${id}`);
+            await api.delete(`${API_URL}/api/Client/${clientId}/SocialInsurance/${id}`);
             await dispatch(getSocialInsurances({ PageSize: 10, PageNumber: 1, clientId }));
         } catch (error) {
             return rejectWithValue(`Failed to delete social insurance: ${error}`);
@@ -110,15 +110,9 @@ const socialInsurancesSlice = createSlice({
         },
         setError: (state, action: PayloadAction<string>) => {
             state.error = action.payload;
-            setTimeout(() => {
-                state.error = null;
-            }, 200);
         },
         setSuccess: (state, action: PayloadAction<string>) => {
             state.successMsg = action.payload;
-            setTimeout(() => {
-                state.successMsg = '';
-            }, 200);
         },
     },
     extraReducers: (builder) => {
@@ -135,9 +129,6 @@ const socialInsurancesSlice = createSlice({
             .addCase(getSocialInsurances.rejected, (state) => {
                 state.loading = false;
                 state.error = "حدث خطا ما";
-                setTimeout(() => {
-                    state.error = null;
-                }, 200);
             })
             .addCase(createSocialInsurance.pending, (state) => {
                 state.loading = true;
@@ -147,16 +138,10 @@ const socialInsurancesSlice = createSlice({
                 state.loading = false;
                 state.formToShow = 1;
                 state.successMsg = "تم اضافة التأمين الاجتماعي بنجاح";
-                setTimeout(() => {
-                    state.successMsg = '';
-                }, 200);
             })
             .addCase(createSocialInsurance.rejected, (state) => {
                 state.loading = false;
                 state.error = "حدث خطا ما";
-                setTimeout(() => {
-                    state.error = null;
-                }, 200);
             })
             .addCase(updateSocialInsurance.pending, (state) => {
                 state.loading = true;
@@ -165,16 +150,10 @@ const socialInsurancesSlice = createSlice({
             .addCase(updateSocialInsurance.fulfilled, (state) => {
                 state.loading = false;
                 state.successMsg = "تم تعديل التأمين الاجتماعي بنجاح";
-                setTimeout(() => {
-                    state.successMsg = '';
-                }, 200);
             })
             .addCase(updateSocialInsurance.rejected, (state) => {
                 state.loading = false;
                 state.error = "حدث خطا ما";
-                setTimeout(() => {
-                    state.error = null;
-                }, 200);
             })
             .addCase(deleteSocialInsurance.pending, (state) => {
                 state.loading = true;
@@ -183,16 +162,10 @@ const socialInsurancesSlice = createSlice({
             .addCase(deleteSocialInsurance.fulfilled, (state) => {
                 state.loading = false;
                 state.successMsg = "تم حذف التأمين الاجتماعي بنجاح";
-                setTimeout(() => {
-                    state.successMsg = '';
-                }, 200);
             })
             .addCase(deleteSocialInsurance.rejected, (state) => {
                 state.loading = false;
                 state.error = "حدث خطا ما";
-                setTimeout(() => {
-                    state.error = null;
-                }, 200);
             });
     }
 });

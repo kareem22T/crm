@@ -1,13 +1,11 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
-import axios from 'axios';
+import {api} from '../../API';
 import { API_URL } from '../../_env';
 import { MetaData } from '../../types/metadata';
 
 // Define types for the contract
 export type ContractType = {
-    establishmentNewspaper: string;
     editedNewspaper: string;
-    establishmentAttach: string;
     editedAttach: string;
 };
 
@@ -30,7 +28,7 @@ export const getContracts = createAsyncThunk<GetContractsResponse, { PageSize: n
     'contracts/getContracts',
     async ({ PageSize, PageNumber, clientId }, { rejectWithValue }) => {
         try {
-            const response = await axios.get<GetContractsResponse>(`${API_URL}/api/Client/${clientId}/Contract`, {
+            const response = await api.get<GetContractsResponse>(`${API_URL}/api/Client/${clientId}/Contract`, {
                 params: { PageSize, PageNumber }
             });
             return response.data;
@@ -44,7 +42,7 @@ export const createContract = createAsyncThunk<void, { contract: ContractType, c
     'contracts/createContract',
     async ({ contract, clientId }, { dispatch, rejectWithValue }) => {
         try {
-            await axios.post(`${API_URL}/api/Client/${clientId}/Contract`, contract);
+            await api.post(`${API_URL}/api/Client/${clientId}/Contract`, contract);
             await dispatch(getContracts({ PageSize: 10, PageNumber: 1, clientId }));
         } catch (error) {
             return rejectWithValue(`Failed to create contract: ${error}`);
@@ -56,7 +54,7 @@ export const updateContract = createAsyncThunk<void, { contract: ContractRow, cl
     'contracts/updateContract',
     async ({ contract, clientId }, { dispatch, rejectWithValue }) => {
         try {
-            await axios.put(`${API_URL}/api/Client/${clientId}/Contract`, contract);
+            await api.put(`${API_URL}/api/Client/${clientId}/Contract`, contract);
             await dispatch(getContracts({ PageSize: 10, PageNumber: 1, clientId }));
         } catch (error) {
             return rejectWithValue(`Failed to update contract: ${error}`);
@@ -68,7 +66,7 @@ export const deleteContract = createAsyncThunk<void, { id: number, clientId: num
     'contracts/deleteContract',
     async ({ id, clientId }, { dispatch, rejectWithValue }) => {
         try {
-            await axios.delete(`${API_URL}/api/Client/${clientId}/Contract/${id}`);
+            await api.delete(`${API_URL}/api/Client/${clientId}/Contract/${id}`);
             await dispatch(getContracts({ PageSize: 10, PageNumber: 1, clientId }));
         } catch (error) {
             return rejectWithValue(`Failed to delete contract: ${error}`);
@@ -110,15 +108,9 @@ const contractsSlice = createSlice({
         },
         setError: (state, action: PayloadAction<string>) => {
             state.error = action.payload;
-            setTimeout(() => {
-                state.error = null;
-            }, 200);
         },
         setSuccess: (state, action: PayloadAction<string>) => {
             state.successMsg = action.payload;
-            setTimeout(() => {
-                state.successMsg = '';
-            }, 200);
         },
     },
     extraReducers: (builder) => {
@@ -135,9 +127,6 @@ const contractsSlice = createSlice({
             .addCase(getContracts.rejected, (state) => {
                 state.loading = false;
                 state.error = "حدث خطا ما";
-                setTimeout(() => {
-                    state.error = null;
-                }, 200);
             })
             .addCase(createContract.pending, (state) => {
                 state.loading = true;
@@ -147,16 +136,10 @@ const contractsSlice = createSlice({
                 state.loading = false;
                 state.formToShow = 1;
                 state.successMsg = "تم اضافة العقد بنجاح";
-                setTimeout(() => {
-                    state.successMsg = '';
-                }, 200);
             })
             .addCase(createContract.rejected, (state) => {
                 state.loading = false;
                 state.error = "حدث خطا ما";
-                setTimeout(() => {
-                    state.error = null;
-                }, 200);
             })
             .addCase(updateContract.pending, (state) => {
                 state.loading = true;
@@ -165,16 +148,10 @@ const contractsSlice = createSlice({
             .addCase(updateContract.fulfilled, (state) => {
                 state.loading = false;
                 state.successMsg = "تم تعديل العقد بنجاح";
-                setTimeout(() => {
-                    state.successMsg = '';
-                }, 200);
             })
             .addCase(updateContract.rejected, (state) => {
                 state.loading = false;
                 state.error = "حدث خطا ما";
-                setTimeout(() => {
-                    state.error = null;
-                }, 200);
             })
             .addCase(deleteContract.pending, (state) => {
                 state.loading = true;
@@ -183,16 +160,10 @@ const contractsSlice = createSlice({
             .addCase(deleteContract.fulfilled, (state) => {
                 state.loading = false;
                 state.successMsg = "تم حذف العقد بنجاح";
-                setTimeout(() => {
-                    state.successMsg = '';
-                }, 200);
             })
             .addCase(deleteContract.rejected, (state) => {
                 state.loading = false;
                 state.error = "حدث خطا ما";
-                setTimeout(() => {
-                    state.error = null;
-                }, 200);
             });
     }
 });

@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
-import axios from 'axios';
+import {api} from '../../API';
 import { API_URL } from '../../_env';
 import { MetaData } from '../../types/metadata';
 
@@ -32,7 +32,7 @@ export const getGeneralTaxes = createAsyncThunk<getGeneralTaxesResponse, { PageS
     'generalTaxes/getGeneralTaxes',
     async ({ PageSize, PageNumber, clientId }, { rejectWithValue }) => {
         try {
-            const response = await axios.get<getGeneralTaxesResponse>(`${API_URL}/api/Client/${clientId}/GeneralTax`, {
+            const response = await api.get<getGeneralTaxesResponse>(`${API_URL}/api/Client/${clientId}/GeneralTax`, {
                 params: { PageSize, PageNumber }
             });
             return response.data;
@@ -46,7 +46,7 @@ export const createGeneralTax = createAsyncThunk<void, { generalTax: GeneralTaxT
     'generalTaxes/createGeneralTax',
     async ({ generalTax, clientId }, { dispatch, rejectWithValue }) => {
         try {
-            await axios.post(`${API_URL}/api/Client/${clientId}/GeneralTax`, generalTax);
+            await api.post(`${API_URL}/api/Client/${clientId}/GeneralTax`, generalTax);
             await dispatch(getGeneralTaxes({ PageSize: 10, PageNumber: 1, clientId }));
         } catch (error) {
             return rejectWithValue(`Failed to create general tax: ${error}`);
@@ -58,7 +58,7 @@ export const updateGeneralTax = createAsyncThunk<void, { generalTax: GeneralTaxR
     'generalTaxes/updateGeneralTax',
     async ({ generalTax, clientId }, { dispatch, rejectWithValue }) => {
         try {
-            await axios.put(`${API_URL}/api/Client/${clientId}/GeneralTax`, generalTax);
+            await api.put(`${API_URL}/api/Client/${clientId}/GeneralTax`, generalTax);
             await dispatch(getGeneralTaxes({ PageSize: 10, PageNumber: 1, clientId }));
         } catch (error) {
             return rejectWithValue(`Failed to update general tax: ${error}`);
@@ -70,7 +70,7 @@ export const deleteGeneralTax = createAsyncThunk<void, { id: number, clientId: n
     'generalTaxes/deleteGeneralTax',
     async ({ id, clientId }, { dispatch, rejectWithValue }) => {
         try {
-            await axios.delete(`${API_URL}/api/Client/${clientId}/GeneralTax/${id}`);
+            await api.delete(`${API_URL}/api/Client/${clientId}/GeneralTax/${id}`);
             await dispatch(getGeneralTaxes({ PageSize: 10, PageNumber: 1, clientId }));
         } catch (error) {
             return rejectWithValue(`Failed to delete general tax: ${error}`);
@@ -112,15 +112,9 @@ const generalTaxesSlice = createSlice({
         },
         setError: (state, action: PayloadAction<string>) => {
             state.error = action.payload;
-            setTimeout(() => {
-                state.error = null;
-            }, 200);
         },
         setSuccess: (state, action: PayloadAction<string>) => {
             state.successMsg = action.payload;
-            setTimeout(() => {
-                state.successMsg = '';
-            }, 200);
         },
     },
     extraReducers: (builder) => {
@@ -137,9 +131,6 @@ const generalTaxesSlice = createSlice({
             .addCase(getGeneralTaxes.rejected, (state) => {
                 state.loading = false;
                 state.error = "حدث خطا ما";
-                setTimeout(() => {
-                    state.error = null;
-                }, 200);
             })
             .addCase(createGeneralTax.pending, (state) => {
                 state.loading = true;
@@ -149,16 +140,10 @@ const generalTaxesSlice = createSlice({
                 state.loading = false;
                 state.formToShow = 1;
                 state.successMsg = "تم اضافة الضريبة العامة بنجاح";
-                setTimeout(() => {
-                    state.successMsg = '';
-                }, 200);
             })
             .addCase(createGeneralTax.rejected, (state) => {
                 state.loading = false;
                 state.error = "حدث خطا ما";
-                setTimeout(() => {
-                    state.error = null;
-                }, 200);
             })
             .addCase(updateGeneralTax.pending, (state) => {
                 state.loading = true;
@@ -167,16 +152,10 @@ const generalTaxesSlice = createSlice({
             .addCase(updateGeneralTax.fulfilled, (state) => {
                 state.loading = false;
                 state.successMsg = "تم تعديل الضريبة العامة بنجاح";
-                setTimeout(() => {
-                    state.successMsg = '';
-                }, 200);
             })
             .addCase(updateGeneralTax.rejected, (state) => {
                 state.loading = false;
                 state.error = "حدث خطا ما";
-                setTimeout(() => {
-                    state.error = null;
-                }, 200);
             })
             .addCase(deleteGeneralTax.pending, (state) => {
                 state.loading = true;
@@ -185,16 +164,10 @@ const generalTaxesSlice = createSlice({
             .addCase(deleteGeneralTax.fulfilled, (state) => {
                 state.loading = false;
                 state.successMsg = "تم حذف الضريبة العامة بنجاح";
-                setTimeout(() => {
-                    state.successMsg = '';
-                }, 200);
             })
             .addCase(deleteGeneralTax.rejected, (state) => {
                 state.loading = false;
                 state.error = "حدث خطا ما";
-                setTimeout(() => {
-                    state.error = null;
-                }, 200);
             });
     }
 });

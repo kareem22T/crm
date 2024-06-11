@@ -2,13 +2,15 @@ import * as React from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import BranchesList from './getBranches';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import type { RootState } from './../../store'
 import CreateBranch from '../../features/branchs/createBranch';
 import 'react-toastify/dist/ReactToastify.css';
 import BranchDetails from './branchDetails';
+import { setError, setSuccess } from './branchSlice';
 
 export default function BranchesView() {
+  const dispatch = useDispatch();
 
   const showSuccessMsg = (msg:string) => {
     toast.success(msg, {
@@ -30,9 +32,11 @@ export default function BranchesView() {
   React.useEffect(() => {
     if (branchError)
       showErrorMessage(branchError);
+      dispatch(setError("")); // Reset the error state
 
     if (branchSuccessMsg)
       showSuccessMsg(branchSuccessMsg);
+      dispatch(setSuccess('')); // Reset the success message state
 
   }, [branchError, branchSuccessMsg])
   

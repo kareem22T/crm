@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
-import axios from 'axios';
+import {api} from '../../API';
 import { API_URL } from '../../_env';
 import { MetaData } from '../../types/metadata';
 
@@ -30,7 +30,7 @@ export const getPartners = createAsyncThunk<GetPartnersResponse, { PageSize: num
     'partners/getPartners',
     async ({ PageSize, PageNumber, clientId }, { rejectWithValue }) => {
         try {
-            const response = await axios.get<GetPartnersResponse>(`${API_URL}/api/Client/${clientId}/Partner`, {
+            const response = await api.get<GetPartnersResponse>(`${API_URL}/api/Client/${clientId}/Partner`, {
                 params: { PageSize, PageNumber }
             });
             return response.data;
@@ -44,7 +44,7 @@ export const createPartner = createAsyncThunk<void, { partner: PartnerType, clie
     'partners/createPartner',
     async ({ partner, clientId }, { dispatch, rejectWithValue }) => {
         try {
-            await axios.post(`${API_URL}/api/Client/${clientId}/Partner`, partner);
+            await api.post(`${API_URL}/api/Client/${clientId}/Partner`, partner);
             await dispatch(getPartners({ PageSize: 10, PageNumber: 1, clientId }));
         } catch (error) {
             return rejectWithValue(`Failed to create partner: ${error}`);
@@ -56,7 +56,7 @@ export const updatePartner = createAsyncThunk<void, { partner: PartnerRow, clien
     'partners/updatePartner',
     async ({ partner, clientId }, { dispatch, rejectWithValue }) => {
         try {
-            await axios.put(`${API_URL}/api/Client/${clientId}/Partner`, partner);
+            await api.put(`${API_URL}/api/Client/${clientId}/Partner`, partner);
             await dispatch(getPartners({ PageSize: 10, PageNumber: 1, clientId }));
         } catch (error) {
             return rejectWithValue(`Failed to update partner: ${error}`);
@@ -68,7 +68,7 @@ export const deletePartner = createAsyncThunk<void, { id: number, clientId: numb
     'partners/deletePartner',
     async ({ id, clientId }, { dispatch, rejectWithValue }) => {
         try {
-            await axios.delete(`${API_URL}/api/Client/${clientId}/Partner/${id}`);
+            await api.delete(`${API_URL}/api/Client/${clientId}/Partner/${id}`);
             await dispatch(getPartners({ PageSize: 10, PageNumber: 1, clientId }));
         } catch (error) {
             return rejectWithValue(`Failed to delete partner: ${error}`);

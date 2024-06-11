@@ -263,21 +263,6 @@ const ClientDetails: React.FC = () => {
                             <div className="flex flex-col gap-5.5 p-3" >
                                 <div>
                                     <label className="mb-3 block text-black dark:text-white">
-                                        رأس المال 
-                                    </label>
-                                    <input
-                                        type="text"
-                                        placeholder="رأس المال"
-                                        className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
-                                        value={client.investedCapital}
-                                        onChange={inputBindHandler('investedCapital')}
-                                        disabled={!isUpdate || false}
-                                    />
-                                </div>
-                            </div>
-                            <div className="flex flex-col gap-5.5 p-3" >
-                                <div>
-                                    <label className="mb-3 block text-black dark:text-white">
                                         مرخص به 
                                     </label>
                                     <input
@@ -318,6 +303,30 @@ const ClientDetails: React.FC = () => {
                                         onChange={inputBindHandler('paid')}
                                         disabled={!isUpdate || false}
                                     />
+                                </div>
+                            </div>
+                            <div className="flex flex-col gap-5.5 p-3">
+                                <div>
+                                    <label className="mb-3 block text-black dark:text-white">
+                                    عقد التأسيس
+                                    </label>
+                                    <input type="text" placeholder="عقد التأسيس"
+                                        className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                                        value={client.establishmentAttach} onChange={inputBindHandler('establishmentAttach')} 
+                                        disabled={!isUpdate || false}
+                                        />
+                                </div>
+                            </div>
+                            <div className="flex flex-col gap-5.5 p-3" style={{gridColumn: "span 2"}}>
+                                <div>
+                                    <label className="mb-3 block text-black dark:text-white">
+                                        صحيفه الشركات بالتأسيس
+                                    </label>
+                                    <input type="text" placeholder="صحيفه الشركات بالتأسيس"
+                                        className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                                        value={client.establishmentNewspaper} onChange={inputBindHandler('establishmentNewspaper')} 
+                                        disabled={!isUpdate || false}
+                                        />
                                 </div>
                             </div>
                             <div className="flex flex-col gap-5.5 p-3" style={{gridColumn: "span 2"}}>

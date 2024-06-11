@@ -72,8 +72,6 @@ const ContractsList: React.FC = () => {
               <Box sx={style}>
                 <h1 className='text-center ' style={{fontSize: 20, fontWeight: 600}}>
                   هل انت متاكد من هذف العقد 
-                  <br />
-                  ({contractDlete.establishmentNewspaper})
                 </h1>
                 <div className="btns flex gap-3 mt-8 justify-center">
                     <button onClick={handleClose} className='inline-flex items-center justify-center gap-2.5 rounded-full bg-black py-4 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10'>
@@ -104,8 +102,6 @@ const ContractsList: React.FC = () => {
                   <table className="w-full table-auto">
                     <thead>
                       <tr className="bg-gray-2 text-right dark:bg-meta-4" style={{whiteSpace: "nowrap"}}>
-                            <th className="border-b border-[#eee] py-5 px-4 font-medium text-black dark:text-white">عقد التأسيس</th>
-                            <th className="border-b border-[#eee] py-5 px-4 font-medium text-black dark:text-white">صحيفه الشركات بالتأسيس</th>
                             <th className="border-b border-[#eee] py-5 px-4 font-medium text-black dark:text-white">عقود  التعديل</th>
                             <th className="border-b border-[#eee] py-5 px-4 font-medium text-black dark:text-white">صحيفه الشركات بالتعديل</th>
                             <th className="border-b border-[#eee] py-5 px-4 font-medium text-black dark:text-white">التحكم</th>
@@ -115,13 +111,7 @@ const ContractsList: React.FC = () => {
                       {contracts.map((contract:ContractRow) => (
                           <tr key={contract.id}>
                                 <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
-                                    <p className="text-black dark:text-white">{contract.establishmentNewspaper}</p>
-                                </td>
-                                <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
                                     <p className="text-black dark:text-white">{contract.editedNewspaper}</p>
-                                </td>
-                                <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
-                                    <p className="text-black dark:text-white">{contract.establishmentAttach}</p>
                                 </td>
                                 <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
                                     <p className="text-black dark:text-white">{contract.editedAttach}</p>

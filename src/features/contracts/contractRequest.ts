@@ -1,13 +1,7 @@
 import { ContractType } from "./contractSlice.ts";
 
 export const validateContract = (contract: ContractType): string | null => {
-    if (!contract.establishmentNewspaper) {
-        return "يرجى إدخال عقد التأسيس"; // "Please enter the establishment newspaper"
-    }
     if (!contract.editedNewspaper) {
-        return "يرجى إدخال صحيفة الشركات بالتأسيس"; // "Please enter the edited newspaper"
-    }
-    if (!contract.establishmentAttach) {
         return "يرجى إدخال عقود التعديل"; // "Please enter the establishment attach"
     }
     if (!contract.editedAttach) {

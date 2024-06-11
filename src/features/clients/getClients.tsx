@@ -151,6 +151,15 @@ const ClientsView: React.FC = () => {
                         </td>
                     </tr>
                 ))}
+                  {
+                      !clients || clients.length === 0 && (
+                        <tr>
+                          <td colSpan={6}>
+                            <h2 className='p-4 mt-4 text-center'>لا يوجد عملاء حتى الان!</h2>
+                          </td>
+                        </tr>
+                      )
+                    }
               </tbody>
             </table>
           </div>

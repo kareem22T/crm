@@ -37,9 +37,6 @@ export const validateClient = (client: ClientType): string | null => {
       if (!client.dateLastRecord) {
         return "يرجى إدخال تاريخ آخر تسجيل";
       }
-      if (!client.investedCapital) {
-        return "يرجى إدخال رأس المال المستثمر";
-      }
       if (!client.licensed) {
         return "يرجى إدخال حالة الترخيص";
       }
@@ -49,7 +46,12 @@ export const validateClient = (client: ClientType): string | null => {
       if (!client.paid) {
         return "يرجى إدخال حالة الدفع";
       }
-          
+      if (!client.establishmentNewspaper) {
+        return "يرجى إدخال صحيفة الشركات بالتأسيس"; // "Please enter the edited newspaper"
+      }
+        if (!client.establishmentAttach) {
+        return "يرجى إدخال عقد التأسيس"; // "Please enter the establishment newspaper"
+      }
     return null;
   };
   
