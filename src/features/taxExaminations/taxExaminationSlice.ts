@@ -159,7 +159,6 @@ const taxExaminationsSlice = createSlice({
             .addCase(updateTaxExamination.rejected, (state) => {
                 state.loading = false;
                 state.error = "حدث خطا ما";
-
             })
             .addCase(deleteTaxExamination.pending, (state) => {
                 state.loading = true;
