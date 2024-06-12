@@ -10,6 +10,7 @@ export type VatType = {
     jurisdiction: string;
     registrationDate: string;
     expiryDate: string;
+    BranchId: number;
 };
 
 export interface VatRow extends VatType {

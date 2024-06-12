@@ -13,6 +13,9 @@ export const validateSocialInsurance = (socialInsurance: SocialInsuranceType): s
     if (!socialInsurance.attached) {
         return "يرجي ارفاق المستند"; // "Please attach the document"
     }
+    if (!socialInsurance.BranchId) {
+        return "يرجي اختيار الفرع"; // "Please attach the document"
+    }
     // Additional validation can be added as required
     return null; // Return null if validation succeeds
 };

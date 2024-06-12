@@ -1,8 +1,9 @@
 import { SocialInsuranceRow, setError, setFormToShow, updateSocialInsurance } from "./socialInsuranceSlice";
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { validateSocialInsurance } from "./socialInsuranceRequest";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../store";
+import { getBranches } from "../branchs/branchSlice";
 
 const SocialInsuranceDetails: React.FC = () => {
     const dispatch = useDispatch<AppDispatch>();
@@ -12,9 +13,15 @@ const SocialInsuranceDetails: React.FC = () => {
 
     const [isUpdate, setIsUpdate] = React.useState<boolean>(false)
 
-    const inputBindHandler = (key: keyof SocialInsuranceRow) => (e: React.ChangeEvent<HTMLInputElement>) => {
-        setSocialInsurance({ ...socialInsurance, [key]: e.target.value });    
+    const branchs = useSelector((state: RootState) => state.branches.branches);  
+
+    const inputBindHandler = (key: keyof SocialInsuranceRow) => (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+        setSocialInsurance({ ...socialInsurance, [key]: e.target.value });
     };
+
+    useEffect(() => {        
+        dispatch(getBranches({ PageSize: 100, PageNumber: 1,  clientId: client?.id || 0}));
+      }, [dispatch]);
 
     const handleUpdate = () => {
         if (!isUpdate) {
@@ -95,6 +102,22 @@ const SocialInsuranceDetails: React.FC = () => {
                         />
                 </div>
             </div>
+            <div className="flex flex-col gap-5.5 p-3">
+            <div>
+            <label className="mb-3 block text-black dark:text-white">
+                    الفرع
+            </label>
+                <select name="branch" id="branch" className='w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary' value={socialInsurance.BranchId} onChange={inputBindHandler('BranchId')} disabled={!isUpdate || false}>
+                    {
+                        branchs && (
+                            branchs.map(branch => (
+                                <option value={branch.id}>{branch.address}</option>
+                            ))
+                        )
+                    }
+                </select>
+            </div>
+        </div>
             </div>
                 <div className="flex flex-col gap-5.5 p-3" style={{gridColumn: "span 2"}}>
                     <button onClick={() => handleUpdate()} className="w-75 inline-flex items-center justify-center gap-2.5 rounded-full bg-meta-3 py-4 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10" style={{margin: "auto"}}>{ isUpdate ? "تحديث" : "تعديل" }</button>

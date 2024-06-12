@@ -9,6 +9,7 @@ export type SocialInsuranceType = {
     socialInsuranceNum: string;
     associatedInsurance: string;
     attached: string;
+    BranchId: number;
 };
 
 export interface SocialInsuranceRow extends SocialInsuranceType {

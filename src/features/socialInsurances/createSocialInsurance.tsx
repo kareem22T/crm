@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import 'react-toastify/dist/ReactToastify.css';
 import { validateSocialInsurance } from "./socialInsuranceRequest";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../store";
 import { SocialInsuranceType, createSocialInsurance, setError, setFormToShow } from './socialInsuranceSlice';
+import { getBranches } from '../branchs/branchSlice';
 
 const SocialInsuranceForm: React.FC = () => {
     const dispatch = useDispatch<AppDispatch>();
@@ -13,10 +14,14 @@ const SocialInsuranceForm: React.FC = () => {
         insuranceStatus: "",
         socialInsuranceNum: "",
         associatedInsurance: "",
-        attached: ""
+        attached: "",
+        BranchId: 0,
     });
     
-    const inputBindHandler = (key: keyof SocialInsuranceType) => (e: React.ChangeEvent<HTMLInputElement>) => {
+    const branchs = useSelector((state: RootState) => state.branches.branches);  
+
+
+    const inputBindHandler = (key: keyof SocialInsuranceType) => (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         setSocialInsurance({ ...socialInsurance, [key]: e.target.value });
     };
 
@@ -29,6 +34,11 @@ const SocialInsuranceForm: React.FC = () => {
         }
     };
 
+    useEffect (() => {
+        dispatch(getBranches({ PageSize: 100, PageNumber: 1,  clientId: client?.id || 0}));
+      }, [dispatch]);
+    
+  
     return (
         <div>
             <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
@@ -77,12 +87,29 @@ const SocialInsuranceForm: React.FC = () => {
 
         <div className="flex flex-col gap-5.5 p-3">
             <div>
-                <label className="mb-3 block text-black dark:text-white">
-                 مرفق
-                </label>
-                <input type="text" placeholder="مرفق"
-                    className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
-                    value={socialInsurance.attached} onChange={inputBindHandler('attached')} />
+                    <label className="mb-3 block text-black dark:text-white">
+                            مرفق
+                    </label>
+                            <input type="text" placeholder="مرفق"
+                                className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                                value={socialInsurance.attached} onChange={inputBindHandler('attached')} />
+                        </div>
+                    </div>
+        <div className="flex flex-col gap-5.5 p-3">
+            <div>
+            <label className="mb-3 block text-black dark:text-white">
+                    الفرع
+            </label>
+                <select name="branch" id="branch" className='w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary' value={socialInsurance.BranchId} onChange={inputBindHandler('BranchId')}>
+                    <option value="0" selected disabled>Select ---</option>
+                    {
+                        branchs && (
+                            branchs.map(branch => (
+                                <option value={branch.id}>{branch.address}</option>
+                            ))
+                        )
+                    }
+                </select>
             </div>
         </div>
                     <div className="flex flex-col gap-5.5 p-3" style={{gridColumn: "span 2"}}>

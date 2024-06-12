@@ -15,6 +15,9 @@ export const validateVat = (VAT: VatType): string | null => {
 
     if (!VAT.expiryDate)
         return "يرجى إدخال تاريخ انتهاء شهادة التسجيل ";
+    if (!VAT.BranchId) {
+        return "يرجي اختيار الفرع"; // "Please attach the document"
+    }
 
     return null; // Return null if validation succeeds
 };
