@@ -4,12 +4,16 @@ import { API_URL } from '../../_env';
 import { MetaData } from '../../types/metadata';
 
 // Define types for tax examination
+export enum TaxExaminationStatus{
+    IndustrialProfits="IndustrialProfits",
+    SalaryTax="SalaryTax",
+    StampDuty="StampDuty"
+ } 
 export type TaxExaminationType = {
-    status: string;
-    industrialProfits: number;
-    salaryTax: number;
-    stampDuty: number;
-    year: string;
+    status: TaxExaminationStatus;
+    statusName:"";
+    amount: number;
+    year: number;
 };
 
 export interface TaxExaminationRow extends TaxExaminationType {

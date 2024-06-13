@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react';
 import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
-import { TaxExaminationRow, deleteTaxExamination, getTaxExaminations, setFormToShow, setSelectedTaxExamination } from './taxExaminationSlice';
+import { TaxExaminationRow, deleteTaxExamination, getTaxExaminations, TaxExaminationStatus,
+  setFormToShow, setSelectedTaxExamination } from './taxExaminationSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../store';
 import Pagination from '@mui/material/Pagination';
@@ -101,10 +102,8 @@ const TaxExaminationsList: React.FC = () => {
                   <table className="w-full table-auto">
                     <thead>
                       <tr className="bg-gray-2 text-right dark:bg-meta-4" style={{whiteSpace: "nowrap"}}>
-                      <th className="border-b border-[#eee] py-5 px-4 font-medium text-black dark:text-white">موقف الفحص الضريبي</th>
-                            <th className="border-b border-[#eee] py-5 px-4 font-medium text-black dark:text-white">أرباح تجاريه وصناعيه</th>
-                            <th className="border-b border-[#eee] py-5 px-4 font-medium text-black dark:text-white">ضريبه الأجور والمرتبات</th>
-                            <th className="border-b border-[#eee] py-5 px-4 font-medium text-black dark:text-white">ضريبه الدمغه</th>
+                            <th className="border-b border-[#eee] py-5 px-4 font-medium text-black dark:text-white">حالة الفحص الضريبي</th>
+                            <th className="border-b border-[#eee] py-5 px-4 font-medium text-black dark:text-white">القيمة</th>
                             <th className="border-b border-[#eee] py-5 px-4 font-medium text-black dark:text-white">السنة</th>
                             <th className="border-b border-[#eee] py-5 px-4 font-medium text-black dark:text-white">التحكم</th>
                       </tr>
@@ -113,16 +112,16 @@ const TaxExaminationsList: React.FC = () => {
                       {taxExaminations.map((taxExamination:TaxExaminationRow) => (
                           <tr key={taxExamination.id}>
                                 <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
-                                    <p className="text-black dark:text-white">{taxExamination.status}</p>
+                                    <p className="text-black dark:text-white">
+                                      {
+                                        taxExamination.statusName == TaxExaminationStatus.IndustrialProfits.toString()?
+                                          "أرباح تجاريه وصناعيه":taxExamination.statusName == TaxExaminationStatus.SalaryTax.toString()?
+                                          "ضريبه الأجور والمرتبات":"ضريبه الدمغه"
+                                      }
+                                    </p>
                                 </td>
                                 <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
-                                    <p className="text-black dark:text-white">{taxExamination.industrialProfits}</p>
-                                </td>
-                                <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
-                                    <p className="text-black dark:text-white">{taxExamination.salaryTax}</p>
-                                </td>
-                                <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
-                                    <p className="text-black dark:text-white">{taxExamination.stampDuty}</p>
+                                    <p className="text-black dark:text-white">{taxExamination.amount}</p>
                                 </td>
                                 <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
                                     <p className="text-black dark:text-white">{taxExamination.year}</p>

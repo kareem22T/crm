@@ -1,4 +1,4 @@
-import { TaxExaminationRow, setError, setFormToShow, updateTaxExamination } from "./taxExaminationSlice";
+import { TaxExaminationRow, TaxExaminationStatus, setError, setFormToShow, updateTaxExamination } from "./taxExaminationSlice";
 import React, { useState } from 'react';
 import { validateTaxExamination } from "./taxExaminationRequest";
 import { useDispatch, useSelector } from "react-redux";
@@ -34,7 +34,7 @@ const TaxExaminationDetails: React.FC = () => {
         <div>
             <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
                 <h2 className="text-title-md2 font-semibold text-black dark:text-white">
-                  تعديل الفحص 
+                  تعديل موقف الفحص الضريبى 
                 </h2>
 
                 <nav>
@@ -49,45 +49,24 @@ const TaxExaminationDetails: React.FC = () => {
                         <label className="mb-3 block text-black dark:text-white">
                             موقف الفحص الضريبي
                         </label>
-                        <input type="text" placeholder="موقف الفحص الضريبي "
+                        <select 
                             className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
-                            value={taxExamination.status} onChange={inputBindHandler('status')}
-                            disabled={!isUpdate || false}
-                        />
+                            value={taxExamination.status} disabled={!isUpdate || false}
+                            onChange={(v)=>{setTaxExamination({ ...taxExamination, "status": (v.target.value as TaxExaminationStatus) });}} >
+                            <option value={TaxExaminationStatus.IndustrialProfits}>أرباح تجاريه وصناعيه</option>
+                            <option value={TaxExaminationStatus.SalaryTax}>ضريبه الأجور والمرتبات</option>
+                            <option value={TaxExaminationStatus.StampDuty}>ضريبه الدمغه</option>
+                        </select>
                     </div>
                 </div>
                 <div className="flex flex-col gap-5.5 p-3">
                     <div>
                         <label className="mb-3 block text-black dark:text-white">
-                            أرباح تجاريه وصناعيه
+                            القيمة  
                         </label>
-                        <input type="text" placeholder="أرباح تجاريه وصناعيه"
+                        <input type="text" placeholder="القيمة"
                             className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
-                            value={taxExamination.industrialProfits} onChange={inputBindHandler('industrialProfits')}
-                            disabled={!isUpdate || false}
-                        />
-                    </div>
-                </div>
-                <div className="flex flex-col gap-5.5 p-3">
-                    <div>
-                        <label className="mb-3 block text-black dark:text-white">
-                            ضريبه الأجور والمرتبات
-                        </label>
-                        <input type="text" placeholder="ضريبه الأجور والمرتبات"
-                            className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
-                            value={taxExamination.salaryTax} onChange={inputBindHandler('salaryTax')}
-                            disabled={!isUpdate || false}
-                        />
-                    </div>
-                </div>
-                <div className="flex flex-col gap-5.5 p-3">
-                    <div>
-                        <label className="mb-3 block text-black dark:text-white">
-                            ضريبه الدمغه
-                        </label>
-                        <input type="text" placeholder="ضريبه الدمغه"
-                            className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
-                            value={taxExamination.stampDuty} onChange={inputBindHandler('stampDuty')}
+                            value={taxExamination.amount} onChange={inputBindHandler('amount')}
                             disabled={!isUpdate || false}
                         />
                     </div>
